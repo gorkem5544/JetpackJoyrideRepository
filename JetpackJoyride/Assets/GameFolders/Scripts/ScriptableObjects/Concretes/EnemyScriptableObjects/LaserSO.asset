@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d50f04057bd9b7429f9e3f7d259696d, type: 3}
+  m_Name: LaserSO
+  m_EditorClassIdentifier: 
+  _top: {fileID: 8742224560425091369, guid: 1edfe91339154724b872a559c48a92d9, type: 3}
+  _down: {fileID: 6653001421593258968, guid: 18fb7afb64a9d9e4db94781f14edbc6c, type: 3}
+  _center: {fileID: 198816079794670950, guid: 410756e68cf78fe41a222fdb27da320e, type: 3}
+  _topTarget: {fileID: 31322741500349423, guid: 6fbd17b026d6a9947927c70f6db19dcd, type: 3}
+  _downTarget: {fileID: 5887746723456951329, guid: 83df147eda8b796429119bf947049c60, type: 3}

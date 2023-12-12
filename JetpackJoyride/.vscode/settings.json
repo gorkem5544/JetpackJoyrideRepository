@@ -51,5 +51,8 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "JetpackJoyride.sln"
+    "dotnet.defaultSolution": "JetpackJoyride.sln",
+    "cSpell.words": [
+        "Dont"
+    ]
 }
