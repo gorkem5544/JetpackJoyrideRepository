@@ -32,6 +32,7 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.Managers.Concretes
             _stateMachine.SetState(menuState);
 
             _stateMachine.SetNormalStateTransitions(menuState, prepareState, () => GameManagerState == GameManagerState.PrepareState);
+            
 
         }
         private void Update()

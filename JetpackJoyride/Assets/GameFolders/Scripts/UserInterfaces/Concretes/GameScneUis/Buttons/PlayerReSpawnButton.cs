@@ -27,3 +27,15 @@ public abstract class BaseButton : MonoBehaviour
     }
     protected abstract void ButtonOnClick();
 }
+public abstract class BaseMenuButton : BaseButton
+{
+    [SerializeField] GameObject _panel;
+    protected virtual void Start()
+    {
+        ChangePanelObjectActive(false);
+    }
+    public void ChangePanelObjectActive(bool canActive)
+    {
+        _panel.SetActive(canActive);
+    }
+}
