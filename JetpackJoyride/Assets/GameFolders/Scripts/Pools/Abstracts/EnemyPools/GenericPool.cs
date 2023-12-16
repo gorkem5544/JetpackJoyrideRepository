@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
-public abstract class GenericPool<T> : MonoBehaviour where T : Component
+public interface IResetPool
+{
+    void ResetAllObject();
+}
+public abstract class GenericPool<T> : MonoBehaviour, IResetPool where T : Component
 {
     [SerializeField] T[] _prefabs;
     [SerializeField] int _countLoop;
@@ -13,6 +16,19 @@ public abstract class GenericPool<T> : MonoBehaviour where T : Component
     private void Awake()
     {
         Singleton();
+    }
+    private void Start()
+    {
+        PlayerManager.Instance.GetPlayer().PlayerHealth.OnDead += ResetAllObject;
+        PlayerManager.Instance.GetPlayer().PlayerHealth.OnReSpawn += ResetAllObject;
+
+    }
+    private void OnDisable()
+    {
+        PlayerManager.Instance.GetPlayer().PlayerHealth.OnDead -= ResetAllObject;
+        PlayerManager.Instance.GetPlayer().PlayerHealth.OnReSpawn -= ResetAllObject;
+
+
     }
     public T Get()
     {
@@ -38,6 +54,9 @@ public abstract class GenericPool<T> : MonoBehaviour where T : Component
         poolObject.gameObject.SetActive(false);
         _poolPrefabs.Enqueue(poolObject);
     }
+
+    public abstract void ResetAllObject();
+
 }
 
 

@@ -6,6 +6,19 @@ namespace Concretes.Pools
     public class LazerPool : GenericPool<LazerController>
     {
         public static LazerPool Instance { get; private set; }
+
+        public override void ResetAllObject()
+        {
+            foreach (LazerController lazerController in GetComponentsInChildren<LazerController>())
+            {
+                if (!lazerController.gameObject.activeSelf)
+                {
+                    return;
+                }
+                lazerController.DeadObject();
+            }
+        }
+
         public override void Singleton()
         {
             if (Instance == null)

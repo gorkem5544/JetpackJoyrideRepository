@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class BarrierGenericPool : SingletonDontDestroyMonoObject<BarrierGenericPool>
+public abstract class BarrierGenericPool : SingletonDontDestroyMonoObject<BarrierGenericPool>, IResetPool
 {
 
     [SerializeField] public BarrierController[] _barrierPrefabsArrayList;
@@ -12,6 +12,16 @@ public abstract class BarrierGenericPool : SingletonDontDestroyMonoObject<Barrie
     private void Start()
     {
         GrowPool();
+        PlayerManager.Instance.GetPlayer().PlayerHealth.OnDead += ResetAllObject;
+        PlayerManager.Instance.GetPlayer().PlayerHealth.OnReSpawn += ResetAllObject;
+
+    }
+    private void OnDisable()
+    {
+        PlayerManager.Instance.GetPlayer().PlayerHealth.OnDead -= ResetAllObject;
+        PlayerManager.Instance.GetPlayer().PlayerHealth.OnReSpawn -= ResetAllObject;
+
+
     }
     public BarrierController GetBarrierPool(BarrierTypeEnum barrierTypeEnum)
     {
@@ -53,5 +63,8 @@ public abstract class BarrierGenericPool : SingletonDontDestroyMonoObject<Barrie
         Queue<BarrierController> _blockQueueList = _barriersDictionaryList[BarrierController.BarrierTypeEnum];
         _blockQueueList.Enqueue(BarrierController);
     }
-    protected abstract void KillAllObjet();
+    // protected abstract void KillAllObjet();
+
+    public abstract void ResetAllObject();
+
 }

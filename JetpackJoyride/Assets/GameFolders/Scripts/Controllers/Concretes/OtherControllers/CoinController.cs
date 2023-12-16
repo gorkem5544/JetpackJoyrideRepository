@@ -8,7 +8,16 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.Controllers.Concretes.Other
     {
         protected override void KillObject()
         {
-            throw new System.NotImplementedException();
+
+        }
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+
+            if (other.TryGetComponent(out IPlayerController playerController))
+            {
+                playerController.GoldManger.IncreaseGold(1);
+                KillObject();
+            }
         }
     }
 

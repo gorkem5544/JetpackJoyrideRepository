@@ -8,6 +8,12 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.Pools.Abstracts.OtherPools
     public class CoinPool : GenericPool<CoinController>
     {
         public static CoinPool Instance { get; set; }
+
+        public override void ResetAllObject()
+        {
+            //throw new System.NotImplementedException();
+        }
+
         public override void Singleton()
         {
             if (Instance == null)

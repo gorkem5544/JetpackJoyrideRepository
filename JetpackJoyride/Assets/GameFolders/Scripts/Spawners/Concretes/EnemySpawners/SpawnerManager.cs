@@ -2,10 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnerManager : BaseSpawner
+public class SpawnerManager 
 {
-    protected override void EnemySpawnAction()
-    {
-
-    }
+    
 }

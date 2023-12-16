@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BarrierPool : BarrierGenericPool
 {
-    protected override void KillAllObjet()
+    public override void ResetAllObject()
     {
         foreach (BaseEnemyController child in GetComponentsInChildren<BarrierController>())
         {
@@ -15,4 +15,16 @@ public class BarrierPool : BarrierGenericPool
             child.DeadObject();
         }
     }
+
+    // protected override void KillAllObjet()
+    // {
+    //     foreach (BaseEnemyController child in GetComponentsInChildren<BarrierController>())
+    //     {
+    //         if (!child.gameObject.activeSelf)
+    //         {
+    //             return;
+    //         }
+    //         child.DeadObject();
+    //     }
+    // }
 }

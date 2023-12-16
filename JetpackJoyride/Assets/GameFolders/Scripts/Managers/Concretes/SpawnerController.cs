@@ -13,7 +13,7 @@ public enum EnemySpawnType
 
 namespace Assembly_CSharp.Assets.GameFolders.Scripts.Managers.Concretes
 {
-    public class EnemyManager : SingletonDontDestroyMonoObject<EnemyManager>
+    public class SpawnerController : MonoBehaviour
     {
         IStateMachine _stateMachine;
         EnemySpawnType _enemySpawnType;
@@ -23,7 +23,7 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.Managers.Concretes
         public BarrierSpawner BarrierSpawner { get => _barrierSpawner; set => _barrierSpawner = value; }
         public LaserSpawner LaserSpawner { get => _laserSpawner; set => _laserSpawner = value; }
 
-        protected override void Awake()
+        private void Awake()
         {
             _barrierSpawner = GameObject.FindWithTag("BarrierSpawner").transform.GetComponent<BarrierSpawner>();
             _laserSpawner = GameObject.FindWithTag("LaserSpawner").transform.GetComponent<LaserSpawner>();
@@ -32,15 +32,15 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.Managers.Concretes
         }
         private void Start()
         {
-            EnemyManagerBarrierEnemySpawnState _enemyManagerBarrierEnemySpawnState = new EnemyManagerBarrierEnemySpawnState(this);
-            EnemyManagerLaserEnemySpawnState _enemyManagerLaserEnemySpawnState = new EnemyManagerLaserEnemySpawnState(this);
-            EnemyManagerDelayState _enemyManagerDelayState = new EnemyManagerDelayState(this);
-            _stateMachine.SetState(_enemyManagerBarrierEnemySpawnState);
-            _stateMachine.SetNormalStateTransitions(_enemyManagerBarrierEnemySpawnState, _enemyManagerDelayState, () => _enemySpawnType == EnemySpawnType.Delay);
-            _stateMachine.SetNormalStateTransitions(_enemyManagerLaserEnemySpawnState, _enemyManagerDelayState, () => _enemySpawnType == EnemySpawnType.Delay);
+            SpawnerControllerBarrierEnemySpawnState _spawnerControllerBarrierEnemySpawnState = new SpawnerControllerBarrierEnemySpawnState(this);
+            SpawnerControllerLaserEnemySpawnState _spawnerControllerLaserEnemySpawnState = new SpawnerControllerLaserEnemySpawnState(this);
+            SpawnerControllerDelayState _spawnerControllerDelayState = new SpawnerControllerDelayState(this);
+            _stateMachine.SetState(_spawnerControllerBarrierEnemySpawnState);
+            _stateMachine.SetNormalStateTransitions(_spawnerControllerBarrierEnemySpawnState, _spawnerControllerDelayState, () => _enemySpawnType == EnemySpawnType.Delay);
+            _stateMachine.SetNormalStateTransitions(_spawnerControllerLaserEnemySpawnState, _spawnerControllerDelayState, () => _enemySpawnType == EnemySpawnType.Delay);
 
-            _stateMachine.SetNormalStateTransitions(_enemyManagerDelayState, _enemyManagerBarrierEnemySpawnState, () => _enemySpawnType == EnemySpawnType.BarrierEnemySpawn);
-            _stateMachine.SetNormalStateTransitions(_enemyManagerDelayState, _enemyManagerLaserEnemySpawnState, () => _enemySpawnType == EnemySpawnType.LaserEnemySpawn);
+            _stateMachine.SetNormalStateTransitions(_spawnerControllerDelayState, _spawnerControllerBarrierEnemySpawnState, () => _enemySpawnType == EnemySpawnType.BarrierEnemySpawn);
+            _stateMachine.SetNormalStateTransitions(_spawnerControllerDelayState, _spawnerControllerLaserEnemySpawnState, () => _enemySpawnType == EnemySpawnType.LaserEnemySpawn);
 
         }
         private void Update()
@@ -54,11 +54,11 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.Managers.Concretes
     }
 
 }
-class EnemyManagerBarrierEnemySpawnState : IState
+class SpawnerControllerBarrierEnemySpawnState : IState
 {
-    EnemyManager _enemyManager;
+    Assembly_CSharp.Assets.GameFolders.Scripts.Managers.Concretes.SpawnerController _enemyManager;
     float _currentSpawnTime = 0;
-    public EnemyManagerBarrierEnemySpawnState(EnemyManager enemyManager)
+    public SpawnerControllerBarrierEnemySpawnState(Assembly_CSharp.Assets.GameFolders.Scripts.Managers.Concretes.SpawnerController enemyManager)
     {
         _enemyManager = enemyManager;
     }
@@ -88,11 +88,11 @@ class EnemyManagerBarrierEnemySpawnState : IState
 
     }
 }
-public class EnemyManagerLaserEnemySpawnState : IState
+public class SpawnerControllerLaserEnemySpawnState : IState
 {
-    EnemyManager _enemyManager;
+    Assembly_CSharp.Assets.GameFolders.Scripts.Managers.Concretes.SpawnerController _enemyManager;
     float _currentSpawnTime = 0;
-    public EnemyManagerLaserEnemySpawnState(EnemyManager enemyManager)
+    public SpawnerControllerLaserEnemySpawnState(Assembly_CSharp.Assets.GameFolders.Scripts.Managers.Concretes.SpawnerController enemyManager)
     {
         _enemyManager = enemyManager;
 
@@ -121,14 +121,18 @@ public class EnemyManagerLaserEnemySpawnState : IState
         Debug.Log("Laser Update");
 
     }
+    public bool IsLaserEnemySpawn()
+    {
+        return _currentSpawnTime > 5;
+    }
 }
-public class EnemyManagerDelayState : IState
+public class SpawnerControllerDelayState : IState
 {
-    protected EnemyManager _enemyManager;
+    protected Assembly_CSharp.Assets.GameFolders.Scripts.Managers.Concretes.SpawnerController _enemyManager;
     float _currentSpawnTime = 0;
     float _timeBoundary;
 
-    public EnemyManagerDelayState(EnemyManager enemyManager)
+    public SpawnerControllerDelayState(Assembly_CSharp.Assets.GameFolders.Scripts.Managers.Concretes.SpawnerController enemyManager)
     {
         _enemyManager = enemyManager;
     }

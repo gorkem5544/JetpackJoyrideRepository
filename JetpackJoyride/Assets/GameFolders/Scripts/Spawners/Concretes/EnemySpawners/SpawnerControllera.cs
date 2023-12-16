@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnerController : MonoBehaviour
+public class SpawnerControllera : MonoBehaviour
 {
     [SerializeField] GameObject[] _barrier;
     [SerializeField] Transform[] _enemySpawnerPos;

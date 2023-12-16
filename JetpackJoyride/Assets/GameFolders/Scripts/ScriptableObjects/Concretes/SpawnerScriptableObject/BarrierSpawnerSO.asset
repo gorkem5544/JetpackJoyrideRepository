@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9ee7d503c9d6d946a30f25b1e20c71b, type: 3}
+  m_Name: BarrierSpawnerSO
+  m_EditorClassIdentifier: 
+  _spawnTransforms:
+  - {fileID: 7849010213981065662, guid: 3e44250cf6756de4bbc2ec1606654c87, type: 3}
+  - {fileID: 7935769524858302157, guid: 96986640af2b0364593e188e9892db3a, type: 3}
+  - {fileID: 182735464799275974, guid: 484e0dfd5e813474dae73d4ad33d31f6, type: 3}
+  - {fileID: 2565736357113338841, guid: 3e5d94c0ec4ad91449988f8608e26b8a, type: 3}
+  - {fileID: 5435121390585451433, guid: 5aa75bc691de9154d89424e3f8859443, type: 3}
+  - {fileID: 8853207244168866928, guid: bc7e08ccf97004a479e7aecc9a2b3570, type: 3}
+  - {fileID: 3989746958556481071, guid: 9aba103af92ec7149af239c8459c65aa, type: 3}
+  _maxSpawnTime: 2
+  _minSpawnTime: 3

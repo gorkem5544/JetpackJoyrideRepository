@@ -10,5 +10,8 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.ScriptableObjects.Concretes
         [SerializeField] float _forceSpeed;
 
         public float ForceSpeed => _forceSpeed;
+
+
+        
     }
 }
