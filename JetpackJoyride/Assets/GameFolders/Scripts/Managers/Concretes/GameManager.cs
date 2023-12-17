@@ -16,14 +16,20 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.Managers.Concretes
 
         GameManagerState _gameManagerState;
         IStateMachine _stateMachine;
+        [SerializeField] PlayerDetailSO playerDetailSO;
+        [SerializeField] PlayerDetailListSO playerDetailListSO;
+        [SerializeField] PlayerController _playerController;
 
+        PlayerController playerController { get; set; }
         public GameManagerState GameManagerState { get => _gameManagerState; set => _gameManagerState = value; }
 
         protected override void Awake()
         {
             base.Awake();
             _stateMachine = new StateMachine();
+            //            playerController = Instantiate(playerDetailSO.playerController);
         }
+
         private void Start()
         {
             MenuState menuState = new MenuState();
@@ -32,7 +38,7 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.Managers.Concretes
             _stateMachine.SetState(menuState);
 
             _stateMachine.SetNormalStateTransitions(menuState, prepareState, () => GameManagerState == GameManagerState.PrepareState);
-            
+
 
         }
         private void Update()

@@ -8,15 +8,13 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.UserInterfaces.Concretes.Ga
 {
     public class CoinText : MonoBehaviour
     {
-        IPlayerController _playerController;
         [SerializeField] TextMeshProUGUI _coinText;
-        private void Awake()
-        {
-            _playerController = GameObject.FindGameObjectWithTag("Player").transform.GetComponent<IPlayerController>();
-        }
+
+        private IGoldManger _playerGoldManager;
         private void Start()
         {
-            _playerController.GoldManger.OnCoinChanged += HandleOnCoinChanged;
+            _playerGoldManager = PlayerManager.Instance.PlayerController.GoldManger;
+            _playerGoldManager.OnCoinChanged += HandleOnCoinChanged;
         }
 
         private void HandleOnCoinChanged(int obj)
@@ -26,7 +24,7 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.UserInterfaces.Concretes.Ga
 
         private void OnDisable()
         {
-            _playerController.GoldManger.OnCoinChanged -= HandleOnCoinChanged;
+            _playerGoldManager.OnCoinChanged -= HandleOnCoinChanged;
 
         }
     }

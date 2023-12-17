@@ -2,27 +2,23 @@ using UnityEngine;
 
 class PlayerManager : SingletonDontDestroyMonoObject<PlayerManager>
 {
-    IPlayerController _playerController;
+    private PlayerController _playerController;
+    public PlayerController PlayerController { get; set; }
 
-
-    protected override void Awake()
+    [SerializeField] PlayerDetailListSO _playerDetailListSO;
+    public void SelectionPlayer(PlayerDetailSO playerDetailSO, PlayerTypeEnum playerTypeEnum = PlayerTypeEnum.White)
     {
-        base.Awake();
-        _playerController = GameObject.FindGameObjectWithTag("Player").transform.GetComponent<PlayerController>();
-
+        _playerController = playerDetailSO.playerController;
     }
-    private void OnEnable()
-    {
-        _playerController = GameObject.FindGameObjectWithTag("Player").transform.GetComponent<PlayerController>();
 
-    }
-    private void OnValidate()
+    public void InstantiatePlayer()
     {
-        _playerController = GameObject.FindGameObjectWithTag("Player").transform.GetComponent<PlayerController>();
+        if (_playerController == null)
+        {
+            _playerController = _playerDetailListSO.playerDetailSOs[0].playerController;
+        }
+        PlayerController = Instantiate(_playerController, Vector2.one, Quaternion.identity);
 
-    }
-    public IPlayerController GetPlayer()
-    {
-        return _playerController;
     }
 }
+

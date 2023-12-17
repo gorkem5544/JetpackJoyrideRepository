@@ -6,11 +6,10 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.UserInterfaces.Concretes.Bu
 
     public class CostumesPanelOpeningButton : BaseButton
     {
-        public System.Action CostumesPanelOpeningButtonClickedEvent;
+        public System.Action<bool> CostumesPanelOpeningButtonClickedEvent;
         protected override void ButtonOnClick()
         {
-            CostumesPanelOpeningButtonClickedEvent?.Invoke();
-
+            CostumesPanelOpeningButtonClickedEvent?.Invoke(true);
         }
     }
 

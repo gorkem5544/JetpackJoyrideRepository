@@ -17,36 +17,21 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.UserInterfaces.Concretes.Ob
 
         private void Start()
         {
-            ChangePanelObjectActive(false);
+            ChangePanelVisibility(false);
         }
         private void OnEnable()
         {
-            CostumesPanelOpeningButton.CostumesPanelOpeningButtonClickedEvent += OpeningCostumesPanel;
-            CostumesPanelClosingButton.CostumesPanelClosingButtonClickedEvent += ClosingCostumesPanel;
+            CostumesPanelOpeningButton.CostumesPanelOpeningButtonClickedEvent += ChangePanelVisibility;
+            CostumesPanelClosingButton.CostumesPanelClosingButtonClickedEvent += ChangePanelVisibility;
         }
 
 
         private void OnDisable()
         {
-            CostumesPanelOpeningButton.CostumesPanelOpeningButtonClickedEvent -= OpeningCostumesPanel;
-            CostumesPanelClosingButton.CostumesPanelClosingButtonClickedEvent -= ClosingCostumesPanel;
-
+            CostumesPanelOpeningButton.CostumesPanelOpeningButtonClickedEvent -= ChangePanelVisibility;
+            CostumesPanelClosingButton.CostumesPanelClosingButtonClickedEvent -= ChangePanelVisibility;
         }
-        private void ClosingCostumesPanel()
-        {
-            ChangePanelObjectActive(false);
-
-
-        }
-
-        private void OpeningCostumesPanel()
-        {
-
-            ChangePanelObjectActive(true);
-        }
-
-
-        public void ChangePanelObjectActive(bool canActive)
+        private void ChangePanelVisibility(bool canActive)
         {
             _panel.SetActive(canActive);
         }

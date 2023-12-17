@@ -52,6 +52,9 @@ public class PlayerController : MonoBehaviour, IPlayerController
     {
         _playerAddForceMovement.ForceUpMovementFixedTick();
     }
+    public void InitializePlayer(PlayerDetailListSO playerDetailListSO){
+
+    }
 
 }
 
@@ -70,7 +73,7 @@ public class PlayerRigidBodyAddForceMovement : BasePlayerMovement
     {
         if (_playerController.InputReader.ForceUpButtonDown)
         {
-            _playerController.Rigidbody2D.AddForce(Vector2.up * _playerController.PlayerSO.ForceSpeed, ForceMode2D.Impulse);
+            //_playerController.Rigidbody2D.AddForce(Vector2.up * _playerController.PlayerSO.ForceSpeed, ForceMode2D.Impulse);
         }
     }
 

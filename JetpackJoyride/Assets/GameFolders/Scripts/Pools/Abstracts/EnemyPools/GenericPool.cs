@@ -1,5 +1,6 @@
 
 using System.Collections.Generic;
+using Assembly_CSharp.Assets.GameFolders.Scripts.Combats.Concretes.PlayerCombats;
 using UnityEngine;
 
 public interface IResetPool
@@ -12,23 +13,24 @@ public abstract class GenericPool<T> : MonoBehaviour, IResetPool where T : Compo
     [SerializeField] int _countLoop;
 
     Queue<T> _poolPrefabs = new Queue<T>();
+    private PlayerHealth _playerHealth;
 
     private void Awake()
     {
         Singleton();
     }
+
     private void Start()
     {
-        PlayerManager.Instance.GetPlayer().PlayerHealth.OnDead += ResetAllObject;
-        PlayerManager.Instance.GetPlayer().PlayerHealth.OnReSpawn += ResetAllObject;
+        _playerHealth = PlayerManager.Instance.PlayerController.PlayerHealth;
 
+        _playerHealth.OnDead += ResetAllObject;
+        _playerHealth.OnReSpawn += ResetAllObject;
     }
     private void OnDisable()
     {
-        PlayerManager.Instance.GetPlayer().PlayerHealth.OnDead -= ResetAllObject;
-        PlayerManager.Instance.GetPlayer().PlayerHealth.OnReSpawn -= ResetAllObject;
-
-
+        _playerHealth.OnDead -= ResetAllObject;
+        _playerHealth.OnReSpawn -= ResetAllObject;
     }
     public T Get()
     {

@@ -6,11 +6,11 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.UserInterfaces.Concretes.Bu
 {
     public class CostumesPanelClosingButton : BaseButton
     {
-        public System.Action CostumesPanelClosingButtonClickedEvent;
+        public System.Action<bool> CostumesPanelClosingButtonClickedEvent;
         
         protected override void ButtonOnClick()
         {
-            CostumesPanelClosingButtonClickedEvent?.Invoke();
+            CostumesPanelClosingButtonClickedEvent?.Invoke(false);
         }
     }
 

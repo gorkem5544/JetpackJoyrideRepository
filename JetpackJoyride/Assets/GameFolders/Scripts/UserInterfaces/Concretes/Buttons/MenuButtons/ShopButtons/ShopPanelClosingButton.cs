@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class ShopPanelClosingButton : BaseButton
 {
-    public System.Action ShopPanelClosingButtonClickedEvent;
+    public System.Action<bool> ShopPanelClosingButtonClickedEvent;
     protected override void ButtonOnClick()
     {
-        ShopPanelClosingButtonClickedEvent?.Invoke();
+        ShopPanelClosingButtonClickedEvent?.Invoke(false);
 
     }
 }

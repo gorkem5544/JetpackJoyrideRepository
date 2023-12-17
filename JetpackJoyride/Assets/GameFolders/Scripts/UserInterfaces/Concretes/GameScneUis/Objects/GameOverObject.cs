@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Assembly_CSharp.Assets.GameFolders.Scripts.Combats.Concretes.PlayerCombats;
 using UnityEngine;
 
 namespace Assembly_CSharp.Assets.GameFolders.Scripts.UserInterfaces.Concretes.GameScneUis.Objects
@@ -8,21 +9,25 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.UserInterfaces.Concretes.Ga
     public class GameOverObject : MonoBehaviour
     {
         [SerializeField] GameObject _gameOverPanel;
-
+        private PlayerHealth _playerHealth;
         private void Start()
         {
+            _playerHealth = PlayerManager.Instance.PlayerController.PlayerHealth;
+            GameObject.FindGameObjectWithTag("Player").transform.GetComponent<PlayerController>();
             ChangeGameOverPanelActive(false);
-            PlayerManager.Instance.GetPlayer().PlayerHealth.OnDead += HandleOnTakeHit;
-            PlayerManager.Instance.GetPlayer().PlayerHealth.OnReSpawn += HandleOnReSpawn;
+
+            _playerHealth.OnDead += HandleOnTakeHit;
+            _playerHealth.OnReSpawn += HandleOnReSpawn;
         }
 
         private void OnDisable()
         {
             ChangeGameOverPanelActive(false);
-            PlayerManager.Instance.GetPlayer().PlayerHealth.OnDead -= HandleOnTakeHit;
-            PlayerManager.Instance.GetPlayer().PlayerHealth.OnReSpawn -= HandleOnReSpawn;
 
+            _playerHealth.OnDead -= HandleOnTakeHit;
+            _playerHealth.OnReSpawn -= HandleOnReSpawn;
         }
+
         private void HandleOnReSpawn()
         {
             ChangeGameOverPanelActive(false);
@@ -35,8 +40,10 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.UserInterfaces.Concretes.Ga
 
         private void ChangeGameOverPanelActive(bool canActive)
         {
-            _gameOverPanel.SetActive(canActive);
-
+            if (_gameOverPanel != null)
+            {
+                _gameOverPanel.SetActive(canActive);
+            }
         }
     }
 

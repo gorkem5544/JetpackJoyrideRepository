@@ -1,5 +1,7 @@
 
+using System;
 using System.Collections.Generic;
+using Assembly_CSharp.Assets.GameFolders.Scripts.Combats.Concretes.PlayerCombats;
 using UnityEngine;
 
 public abstract class BarrierGenericPool : SingletonDontDestroyMonoObject<BarrierGenericPool>, IResetPool
@@ -9,19 +11,18 @@ public abstract class BarrierGenericPool : SingletonDontDestroyMonoObject<Barrie
     [SerializeField] int _countLoop;
     Dictionary<BarrierTypeEnum, Queue<BarrierController>> _barriersDictionaryList = new Dictionary<BarrierTypeEnum, Queue<BarrierController>>();
 
+    private PlayerHealth _playerHealth;
     private void Start()
     {
+        _playerHealth = PlayerManager.Instance.PlayerController.PlayerHealth;
         GrowPool();
-        PlayerManager.Instance.GetPlayer().PlayerHealth.OnDead += ResetAllObject;
-        PlayerManager.Instance.GetPlayer().PlayerHealth.OnReSpawn += ResetAllObject;
-
+        _playerHealth.OnDead += ResetAllObject;
+        _playerHealth.OnReSpawn += ResetAllObject;
     }
     private void OnDisable()
     {
-        PlayerManager.Instance.GetPlayer().PlayerHealth.OnDead -= ResetAllObject;
-        PlayerManager.Instance.GetPlayer().PlayerHealth.OnReSpawn -= ResetAllObject;
-
-
+        _playerHealth.OnDead -= ResetAllObject;
+        _playerHealth.OnReSpawn -= ResetAllObject;
     }
     public BarrierController GetBarrierPool(BarrierTypeEnum barrierTypeEnum)
     {

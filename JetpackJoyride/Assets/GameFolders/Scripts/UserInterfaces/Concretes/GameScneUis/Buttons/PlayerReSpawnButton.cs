@@ -9,7 +9,7 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.UserInterfaces.Concretes.Ga
     {
         protected override void ButtonOnClick()
         {
-            PlayerManager.Instance.GetPlayer().PlayerHealth.OnReSpawn();
+            //PlayerManager.Instance.GetPlayer().PlayerHealth.OnReSpawn();
         }
     }
 

@@ -13,34 +13,25 @@ public class ShopObject : MonoBehaviour
 
     private void Start()
     {
-        ChangePanelObjectActive(false);
+        ChangePanelVisibility(false);
     }
     private void OnEnable()
     {
-        _shopPanelOpeningButton.ShopPanelOpeningButtonClickedEvent += OpeningShopPanel;
-        _shopPanelClosingButton.ShopPanelClosingButtonClickedEvent += ClosingShopPanel;
+        _shopPanelOpeningButton.ShopPanelOpeningButtonClickedEvent += ChangePanelVisibility;
+        _shopPanelClosingButton.ShopPanelClosingButtonClickedEvent += ChangePanelVisibility;
     }
 
 
     private void OnDisable()
     {
-        _shopPanelOpeningButton.ShopPanelOpeningButtonClickedEvent -= OpeningShopPanel;
-        _shopPanelClosingButton.ShopPanelClosingButtonClickedEvent -= ClosingShopPanel;
+        _shopPanelOpeningButton.ShopPanelOpeningButtonClickedEvent -= ChangePanelVisibility;
+        _shopPanelClosingButton.ShopPanelClosingButtonClickedEvent -= ChangePanelVisibility;
 
     }
-    private void ClosingShopPanel()
-    {
-        ChangePanelObjectActive(false);
-    }
 
-    private void OpeningShopPanel()
+    public void ChangePanelVisibility(bool canActive)
     {
-        ChangePanelObjectActive(true);
-    }
 
-
-    public void ChangePanelObjectActive(bool canActive)
-    {
         _panel.gameObject.SetActive(canActive);
     }
 }

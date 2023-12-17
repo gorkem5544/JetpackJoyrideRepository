@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class ShopPanelOpeningButton : BaseButton
 {
-    public System.Action ShopPanelOpeningButtonClickedEvent;
+    public System.Action<bool> ShopPanelOpeningButtonClickedEvent;
     protected override void ButtonOnClick()
     {
-        ShopPanelOpeningButtonClickedEvent?.Invoke();
+        ShopPanelOpeningButtonClickedEvent?.Invoke(true);
 
     }
 }

@@ -11,34 +11,24 @@ public class MenuObject : MonoBehaviour
     [SerializeField] MenuPanel _menuPanel;
     private void OnEnable()
     {
-        _costumesObject.CostumesPanelOpeningButton.CostumesPanelOpeningButtonClickedEvent += ClosingMenuPanel;
-        _costumesObject.CostumesPanelClosingButton.CostumesPanelClosingButtonClickedEvent += OpeningMenuPanel;
+        _costumesObject.CostumesPanelOpeningButton.CostumesPanelOpeningButtonClickedEvent += ChangePanelVisibility;
+        _costumesObject.CostumesPanelClosingButton.CostumesPanelClosingButtonClickedEvent += ChangePanelVisibility;
 
-        _shopObject.ShopPanelOpeningButton.ShopPanelOpeningButtonClickedEvent += ClosingMenuPanel;
-        _shopObject.ShopPanelClosingButton.ShopPanelClosingButtonClickedEvent += OpeningMenuPanel;
+        _shopObject.ShopPanelOpeningButton.ShopPanelOpeningButtonClickedEvent += ChangePanelVisibility;
+        _shopObject.ShopPanelClosingButton.ShopPanelClosingButtonClickedEvent += ChangePanelVisibility;
     }
 
     private void OnDisable()
     {
-        _costumesObject.CostumesPanelOpeningButton.CostumesPanelOpeningButtonClickedEvent -= ClosingMenuPanel;
-        _costumesObject.CostumesPanelClosingButton.CostumesPanelClosingButtonClickedEvent -= OpeningMenuPanel;
+        _costumesObject.CostumesPanelOpeningButton.CostumesPanelOpeningButtonClickedEvent -= ChangePanelVisibility;
+        _costumesObject.CostumesPanelClosingButton.CostumesPanelClosingButtonClickedEvent -= ChangePanelVisibility;
 
-        _shopObject.ShopPanelOpeningButton.ShopPanelOpeningButtonClickedEvent -= ClosingMenuPanel;
-        _shopObject.ShopPanelClosingButton.ShopPanelClosingButtonClickedEvent -= OpeningMenuPanel;
+        _shopObject.ShopPanelOpeningButton.ShopPanelOpeningButtonClickedEvent -= ChangePanelVisibility;
+        _shopObject.ShopPanelClosingButton.ShopPanelClosingButtonClickedEvent -= ChangePanelVisibility;
 
     }
-    private void OpeningMenuPanel()
+    private void ChangePanelVisibility(bool canActive)
     {
-        ChangePanelObjectActive(true);
-    }
-
-    private void ClosingMenuPanel()
-    {
-        ChangePanelObjectActive(false);
-    }
-
-    public void ChangePanelObjectActive(bool canActive)
-    {
-        _menuPanel.gameObject.SetActive(canActive);
+        _menuPanel.gameObject.SetActive(!canActive);
     }
 }

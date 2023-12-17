@@ -12,15 +12,15 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.UserInterfaces.Concretes.Ga
 
         private void OnEnable()
         {
-            if (PlayerManager.Instance.GetPlayer().GoldManger.GoldAmount > 15)
-            {
-                _playerReSpawnButton.enabled = true;
-            }
-            else
-            {
-                _playerReSpawnButton.enabled = false;
+            // if (PlayerManager.Instance.GetPlayer().GoldManger.GoldAmount > 15)
+            // {
+            //     _playerReSpawnButton.enabled = true;
+            // }
+            // else
+            // {
+            //     _playerReSpawnButton.enabled = false;
 
-            }
+            // }
         }
     }
 
