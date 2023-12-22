@@ -5,13 +5,21 @@ using UnityEngine;
 
 namespace Assembly_CSharp.Assets.GameFolders.Scripts.Pools.Abstracts.OtherPools
 {
-    public class CoinPool : GenericPool<CoinController>
+    public class GoldPool : GenericPool<GoldController>
     {
-        public static CoinPool Instance { get; set; }
+        public static GoldPool Instance { get; set; }
 
         public override void ResetAllObject()
         {
-            //throw new System.NotImplementedException();
+            foreach (GoldController child in GetComponentsInChildren<GoldController>())
+            {
+                if (!child.gameObject.activeSelf)
+                {
+                    return;
+                }
+                child.Dead();
+            }
+
         }
 
         public override void Singleton()
@@ -19,11 +27,11 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.Pools.Abstracts.OtherPools
             if (Instance == null)
             {
                 Instance = this;
-                DontDestroyOnLoad(this.gameObject);
+                DontDestroyOnLoad(gameObject);
             }
             else
             {
-                Destroy(this.gameObject);
+                Destroy(gameObject);
             }
         }
     }

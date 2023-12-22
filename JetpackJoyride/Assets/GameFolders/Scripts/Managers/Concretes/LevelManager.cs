@@ -7,11 +7,36 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.Managers.Concretes
 {
     public class LevelManager : SingletonDontDestroyMonoObject<LevelManager>
     {
+        protected override void Awake()
+        {
+            base.Awake();
+
+        }
         public void LoadLevelScene(string sceneName)
         {
             StartCoroutine(LoadSceneAsync(sceneName));
         }
         public IEnumerator LoadSceneAsync(string sceneName)
+        {
+            //syncOperation asyncOperation = SceneManager.LoadSceneAsync(sceneName);
+            //hile (asyncOperation.progress < 1)
+            //
+            //   PlayerManager.Instance.InstantiatePlayer();
+            //   //PlayerManager.Instance.GetReferancePlayer();
+            //   yield return new WaitForEndOfFrame();
+
+            //
+
+            yield return SceneManager.LoadSceneAsync(sceneName);
+            GameManager.Instance.ChangeGameState(GameManagerState.GameState);
+            PlayerManager.Instance.InstantiatePlayer();
+
+        }
+        public void LoadMenuScene(string sceneName)
+        {
+            StartCoroutine(LoadMenuAsync(sceneName));
+        }
+        private IEnumerator LoadMenuAsync(string sceneName)
         {
             // AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(sceneName);
             // while (asyncOperation.progress < 1)
@@ -25,7 +50,9 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.Managers.Concretes
             // }
 
             yield return SceneManager.LoadSceneAsync(sceneName);
-            PlayerManager.Instance.InstantiatePlayer();
+            GoldManager.Instance.PlayerPrefsGetScore();
+            GameManager.Instance.ChangeGameState(GameManagerState.MenuState);
+
         }
     }
 

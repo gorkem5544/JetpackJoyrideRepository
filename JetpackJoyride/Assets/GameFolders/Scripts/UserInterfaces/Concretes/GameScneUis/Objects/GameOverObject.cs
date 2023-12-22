@@ -13,38 +13,26 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.UserInterfaces.Concretes.Ga
         private void Start()
         {
             _playerHealth = PlayerManager.Instance.PlayerController.PlayerHealth;
-            GameObject.FindGameObjectWithTag("Player").transform.GetComponent<PlayerController>();
             ChangeGameOverPanelActive(false);
 
-            _playerHealth.OnDead += HandleOnTakeHit;
-            _playerHealth.OnReSpawn += HandleOnReSpawn;
+            _playerHealth.PlayerHitEvent += HandleOnTakeHit;
+            _playerHealth.PlayerReviveEvent += HandleOnReSpawn;
         }
 
         private void OnDisable()
         {
             ChangeGameOverPanelActive(false);
 
-            _playerHealth.OnDead -= HandleOnTakeHit;
-            _playerHealth.OnReSpawn -= HandleOnReSpawn;
+            _playerHealth.PlayerHitEvent -= HandleOnTakeHit;
+            _playerHealth.PlayerReviveEvent -= HandleOnReSpawn;
         }
 
-        private void HandleOnReSpawn()
-        {
-            ChangeGameOverPanelActive(false);
-        }
 
-        private void HandleOnTakeHit()
-        {
-            ChangeGameOverPanelActive(true);
-        }
+        private void HandleOnReSpawn() => ChangeGameOverPanelActive(false);
+        private void HandleOnTakeHit() => ChangeGameOverPanelActive(true);
 
-        private void ChangeGameOverPanelActive(bool canActive)
-        {
-            if (_gameOverPanel != null)
-            {
-                _gameOverPanel.SetActive(canActive);
-            }
-        }
+        private void ChangeGameOverPanelActive(bool canActive) => _gameOverPanel.SetActive(canActive);
+
     }
 
 }

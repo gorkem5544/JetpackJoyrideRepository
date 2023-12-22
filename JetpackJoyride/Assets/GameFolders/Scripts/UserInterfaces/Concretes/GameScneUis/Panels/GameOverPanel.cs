@@ -2,26 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using Assembly_CSharp.Assets.GameFolders.Scripts.UserInterfaces.Concretes.GameScneUis.Buttons;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Assembly_CSharp.Assets.GameFolders.Scripts.UserInterfaces.Concretes.GameScneUis.Panels
 {
     public class GameOverPanel : MonoBehaviour
     {
         [SerializeField] PlayerReSpawnButton _playerReSpawnButton;
-
-        private void OnEnable()
+        IGoldManger _playerGoldManager;
+        private void Start()
         {
-            // if (PlayerManager.Instance.GetPlayer().GoldManger.GoldAmount > 15)
-            // {
-            //     _playerReSpawnButton.enabled = true;
-            // }
-            // else
-            // {
-            //     _playerReSpawnButton.enabled = false;
-
-            // }
+            _playerGoldManager = PlayerManager.Instance.PlayerController.GoldManger;
+            _playerReSpawnButton.gameObject.SetActive(_playerGoldManager.CurrentGold > _playerGoldManager.PlayerReSpawnCost());
         }
     }
-
 }

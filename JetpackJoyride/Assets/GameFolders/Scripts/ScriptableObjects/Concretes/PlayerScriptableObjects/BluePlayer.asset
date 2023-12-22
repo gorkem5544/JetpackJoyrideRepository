@@ -12,4 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7e86ada6299f1849948fb46bea0a09e, type: 3}
   m_Name: BluePlayer
   m_EditorClassIdentifier: 
+  playerCharacterName: Blue
+  Color: {r: 0, g: 0, b: 0, a: 0}
   playerController: {fileID: 3914974103915504782, guid: 7d9749c35288ebe4a9479233926f3dcb, type: 3}
+  PlayerTypeEnum: 2

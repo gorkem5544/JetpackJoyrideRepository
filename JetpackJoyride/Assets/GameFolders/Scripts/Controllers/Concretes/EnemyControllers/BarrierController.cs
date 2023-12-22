@@ -52,7 +52,7 @@ public abstract class BaseEnemyHorizontalMovement : IBaseEntityHorizontalMovemen
 }
 public class BarrierHorizontalMovement : BaseEnemyHorizontalMovement, IBaseEntityHorizontalMovement
 {
-    
+
     public BarrierHorizontalMovement(IEnemyController enemyController) : base(enemyController)
     {
 

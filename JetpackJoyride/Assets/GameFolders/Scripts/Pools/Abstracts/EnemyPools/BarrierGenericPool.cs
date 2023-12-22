@@ -16,13 +16,13 @@ public abstract class BarrierGenericPool : SingletonDontDestroyMonoObject<Barrie
     {
         _playerHealth = PlayerManager.Instance.PlayerController.PlayerHealth;
         GrowPool();
-        _playerHealth.OnDead += ResetAllObject;
-        _playerHealth.OnReSpawn += ResetAllObject;
+        _playerHealth.PlayerHitEvent += ResetAllObject;
+        _playerHealth.PlayerReviveEvent += ResetAllObject;
     }
     private void OnDisable()
     {
-        _playerHealth.OnDead -= ResetAllObject;
-        _playerHealth.OnReSpawn -= ResetAllObject;
+        _playerHealth.PlayerHitEvent -= ResetAllObject;
+        _playerHealth.PlayerReviveEvent -= ResetAllObject;
     }
     public BarrierController GetBarrierPool(BarrierTypeEnum barrierTypeEnum)
     {

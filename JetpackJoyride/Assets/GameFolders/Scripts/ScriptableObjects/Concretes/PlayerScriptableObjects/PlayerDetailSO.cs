@@ -7,8 +7,8 @@ using UnityEngine;
 public class PlayerDetailSO : ScriptableObject
 {
     public string playerCharacterName;
+    public Color Color;
     public PlayerController playerController;
-    private PlayerTypeEnum playerTypeEnum;
-    public PlayerTypeEnum PlayerTypeEnum { get => playerTypeEnum; set => playerTypeEnum = value; }
+    public PlayerTypeEnum PlayerTypeEnum;
 
 }

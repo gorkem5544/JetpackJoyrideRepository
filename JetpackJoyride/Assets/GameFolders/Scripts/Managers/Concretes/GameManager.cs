@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Assembly_CSharp.Assets.GameFolders.Scripts.Managers.Concretes;
 using Assembly_CSharp.Assets.GameFolders.Scripts.StateMachines.Abstracts;
 using Assembly_CSharp.Assets.GameFolders.Scripts.StateMachines.Concretes;
 using UnityEngine;
 
 public enum GameManagerState
 {
-    MainMenuState, PrepareState, GameState, FinalSpinState, FinalInfo, ShopMenuState, Costumes
+    MenuState, GameState, GameOverState
 }
 
 namespace Assembly_CSharp.Assets.GameFolders.Scripts.Managers.Concretes
@@ -27,18 +28,23 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.Managers.Concretes
         {
             base.Awake();
             _stateMachine = new StateMachine();
-            //            playerController = Instantiate(playerDetailSO.playerController);
         }
 
         private void Start()
         {
-            MenuState menuState = new MenuState();
-            PrepareState prepareState = new PrepareState();
+            MenuState _menuState = new MenuState();
+            GameState _gameState = new GameState();
+            GameOverState _gameOverState = new GameOverState(this);
 
-            _stateMachine.SetState(menuState);
+            _stateMachine.SetState(_menuState);
 
-            _stateMachine.SetNormalStateTransitions(menuState, prepareState, () => GameManagerState == GameManagerState.PrepareState);
+            _stateMachine.SetNormalStateTransitions(_menuState, _gameState, () => GameManagerState == GameManagerState.GameState);
+            _stateMachine.SetNormalStateTransitions(_gameState, _gameOverState, () => _gameManagerState == GameManagerState.GameOverState);
 
+            _stateMachine.SetNormalStateTransitions(_gameOverState, _menuState, () => _gameManagerState == GameManagerState.MenuState);
+            //_stateMachine.SetNormalStateTransitions(_gameState, _menuState, () => _gameManagerState == GameManagerState.MenuState);
+
+            _stateMachine.SetNormalStateTransitions(_gameOverState, _gameState, () => _gameManagerState == GameManagerState.GameState);
 
         }
         private void Update()
@@ -56,7 +62,8 @@ public class MenuState : IState
 {
     public void EnterState()
     {
-
+        GoldManager.Instance.PlayerPrefsGetScore();
+        GoldManager.Instance.SumGameAndMenuScore();
     }
 
     public void ExitState()
@@ -66,10 +73,11 @@ public class MenuState : IState
 
     public void UpdateState()
     {
+        Debug.Log("Menu Update");
 
     }
 }
-public class PrepareState : IState
+public class GameState : IState
 {
     public void EnterState()
     {
@@ -83,39 +91,31 @@ public class PrepareState : IState
 
     public void UpdateState()
     {
+        Debug.Log("Game Update");
 
     }
 }
-public class GameOverPanelState : IState
-{
-    public void EnterState()
-    {
 
-    }
-
-    public void ExitState()
-    {
-    }
-
-    public void UpdateState()
-    {
-
-    }
-}
 public class GameOverState : IState
 {
+    GameManager _gameManager;
+    float _timer = 0;
+    public GameOverState(GameManager gameManager)
+    {
+        _gameManager = gameManager;
+    }
     public void EnterState()
     {
-        throw new System.NotImplementedException();
+        _timer = 0;
     }
 
     public void ExitState()
     {
-        throw new System.NotImplementedException();
+        _timer = 0;
     }
 
     public void UpdateState()
     {
-        throw new System.NotImplementedException();
+        Debug.Log("Dead Update");
     }
 }

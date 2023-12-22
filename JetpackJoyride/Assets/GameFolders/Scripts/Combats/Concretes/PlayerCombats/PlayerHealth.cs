@@ -1,27 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
+using Assembly_CSharp.Assets.GameFolders.Scripts.Managers.Concretes;
 using UnityEngine;
 
+public interface IPlayerHealth
+{
+
+}
 namespace Assembly_CSharp.Assets.GameFolders.Scripts.Combats.Concretes.PlayerCombats
 {
     public class PlayerHealth : MonoBehaviour
     {
-        public System.Action OnDead { get; set; }
-        public System.Action OnReSpawn { get; set; }
-        public void TakeHit()
-        {
-            OnDead?.Invoke();
-        }
-        public void ReSpawn()
-        {
-            OnReSpawn?.Invoke();
-        }
+        public System.Action PlayerHitEvent { get; set; }
+        public System.Action PlayerReviveEvent { get; set; }
+        public int HitCount { get; private set; }
+
+
         private void OnCollisionEnter2D(Collision2D other)
         {
-            if (other.transform.TryGetComponent(out IEnemyController enemyController))
+            if (other.transform.GetComponent<IEnemyController>() != null)
             {
-                TakeHit();
-                BarrierPool.Instance.SetPool(enemyController.transform.GetComponent<BarrierController>());
+                HitCount++;
+                PlayerHitEvent?.Invoke();
+                GameManager.Instance.ChangeGameState(GameManagerState.GameOverState);
             }
         }
     }

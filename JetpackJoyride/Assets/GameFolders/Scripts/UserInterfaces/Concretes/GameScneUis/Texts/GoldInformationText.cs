@@ -6,15 +6,21 @@ using UnityEngine;
 
 namespace Assembly_CSharp.Assets.GameFolders.Scripts.UserInterfaces.Concretes.GameScneUis.Texts
 {
-    public class CoinText : MonoBehaviour
+    public class GoldInformationText : MonoBehaviour
     {
         [SerializeField] TextMeshProUGUI _coinText;
 
         private IGoldManger _playerGoldManager;
+        IPlayerManager _playerManager;
+        private void Awake()
+        {
+            _playerManager = new PlayerManager();
+        }
         private void Start()
         {
             _playerGoldManager = PlayerManager.Instance.PlayerController.GoldManger;
-            _playerGoldManager.OnCoinChanged += HandleOnCoinChanged;
+            //_playerGoldManager.OnCoinChanged += HandleOnCoinChanged;
+            _playerGoldManager.GameInGoldChanged += HandleOnCoinChanged;
         }
 
         private void HandleOnCoinChanged(int obj)
@@ -24,9 +30,10 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.UserInterfaces.Concretes.Ga
 
         private void OnDisable()
         {
-            _playerGoldManager.OnCoinChanged -= HandleOnCoinChanged;
+            _playerGoldManager.GameInGoldChanged -= HandleOnCoinChanged;
 
         }
+
     }
 
 }
