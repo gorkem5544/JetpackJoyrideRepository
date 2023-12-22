@@ -10,27 +10,40 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.UserInterfaces.Concretes.Ga
     {
         [SerializeField] TextMeshProUGUI _scoreText;
 
-        float _currentScore;
-        float _multipleValue;
-        private void Start()
+        IncreaseScore _increaseScore;
+        private void Awake()
         {
-            _currentScore = 0;
-            _multipleValue = 1;
-        }
-        private void Update()
-        {
-            ChangeMultipleValue();
-            if (GameManager.Instance.GameManagerState == GameManagerState.GameState)
-            {
-                _currentScore += Time.deltaTime * _multipleValue;
-                _scoreText.text = _currentScore.ToString("0");
-            }
+            _increaseScore = new IncreaseScore(_scoreText);
         }
 
-        public void ChangeMultipleValue(float value = 0.002f)
+        private void Update()
         {
-            _multipleValue += value;
+            _increaseScore.IncreaseCoreUpdateTick();
+        }
+
+    }
+
+
+}
+public class IncreaseScore
+{
+    private float _currentScore, _multipleFactor = 1;
+    public float Score => _currentScore;
+    TextMeshProUGUI _scoreText;
+    public IncreaseScore(TextMeshProUGUI scoreText)
+    {
+        _scoreText = scoreText;
+    }
+    public void IncreaseCoreUpdateTick()
+    {
+        IncreaseMultipleFactor();
+        if (GameManager.Instance.GameManagerState == GameManagerState.GameState)
+        {
+            _currentScore += Time.deltaTime * _multipleFactor;
+            _scoreText.text = _currentScore.ToString("0");
+            ScoreManager.Instance.SaveScore(_currentScore);
         }
     }
+    private void IncreaseMultipleFactor(float value = 0.002f) => _multipleFactor += value;
 
 }

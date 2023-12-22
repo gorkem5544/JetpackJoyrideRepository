@@ -10,39 +10,14 @@ public class CostumesPanel : MonoBehaviour
     [SerializeField] PlayerSelectButton[] _yellowPlayerSelectButton;
     public List<PlayerSelectButton> yellowPlayerSelectButtons;
 
-    private void Start()
-    {
-        // ShopManager.Instance.playerDetailListsAction += handleOnSpawn;
-
-    }
 
     private void OnEnable()
     {
-        //ShopManager.Instance.playerDetailListsAction += handleOnSpawn;
         ListhandleOnSpawn();
     }
-    //private void OnDisable() => ShopManager.Instance.playerDetailListsAction -= handleOnSpawn;
-    private void Update()
-    {
-
-    }
-    private void handleOnSpawn(PlayerDetailSO a)
-    {
-        Debug.Log("Event");
-
-        foreach (PlayerSelectButton P in _yellowPlayerSelectButton)
-        {
-            if (a.PlayerTypeEnum == P._playerDetailSO.PlayerTypeEnum)
-            {
-                Debug.Log(a + "+" + P);
-                P.gameObject.SetActive(true);
-            }
-            else
-            {
-                return;
-            }
-        }
-    }
+    /// <summary>
+    /// TODO: OPtimize
+    /// </summary>
     List<PlayerDetailSO> playerDetailSOs = new List<PlayerDetailSO>();
     private void ListhandleOnSpawn()
     {
