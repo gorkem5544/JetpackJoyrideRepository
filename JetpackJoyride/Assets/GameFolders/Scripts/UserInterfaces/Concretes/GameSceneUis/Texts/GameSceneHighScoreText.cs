@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Assembly_CSharp.Assets.GameFolders.Scripts.UserInterfaces.Concretes.GameSceneUis.Texts
 {
-    public class HighScoreInfoText : BaseHighScoreText
+    public class GameSceneHighScoreText : BaseHighScoreText
     {
         private void Update() => WriteHighScoreValueIntoText();
     }

@@ -10,7 +10,7 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.UserInterfaces.Concretes.Me
         [SerializeField] TextMeshProUGUI _goldInformationText;
         private void Start()
         {
-            _goldInformationText.text = GoldManager.Instance.GoldDataSO.GoldAmount.ToString();
+            _goldInformationText.text = "GOLD: " + GoldManager.Instance.GoldDataSO.GoldAmount.ToString();
         }
     }
 

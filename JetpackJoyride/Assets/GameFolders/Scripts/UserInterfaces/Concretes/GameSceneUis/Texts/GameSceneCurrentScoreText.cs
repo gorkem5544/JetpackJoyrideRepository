@@ -9,31 +9,17 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.UserInterfaces.Concretes.Ga
     public class GameSceneCurrentScoreText : MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI _scoreText;
-        private IncreaseScore _increaseScore;
+        private float _currentScore, _multipleFactor = 1;
 
-        private void Awake() => _increaseScore = new IncreaseScore(_scoreText);
-        private void Update() => _increaseScore.IncreaseScoreUpdateTick();
-
-    }
-}
-public class IncreaseScore
-{
-    private float _currentScore, _multipleFactor = 1;
-    private TextMeshProUGUI _scoreText;
-
-    public IncreaseScore(TextMeshProUGUI scoreText) => _scoreText = scoreText;
-
-    public void IncreaseScoreUpdateTick()
-    {
-        if (GameManager.Instance.GameManagerState == GameManagerState.GameState)
+        private void Update()
         {
-            _currentScore += Time.deltaTime * IncreaseMultipleFactor();
-            _scoreText.text = _currentScore.ToString("0");
-            ScoreManager.Instance.SaveScore(_currentScore);
+            if (GameManager.Instance.GameManagerState == GameManagerState.GameState)
+            {
+                _currentScore += Time.deltaTime * IncreaseMultipleFactor();
+                _scoreText.text = "SCORE: " + _currentScore.ToString("0");
+                ScoreManager.Instance.SaveScore(_currentScore);
+            }
         }
+        private float IncreaseMultipleFactor(float value = 0.002f) => _multipleFactor += value;
     }
-    private float IncreaseMultipleFactor(float value = 0.002f) => _multipleFactor += value;
-
-
-
 }

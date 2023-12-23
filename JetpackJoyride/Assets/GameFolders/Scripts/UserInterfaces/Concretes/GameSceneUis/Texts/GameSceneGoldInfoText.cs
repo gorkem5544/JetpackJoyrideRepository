@@ -25,7 +25,7 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.UserInterfaces.Concretes.Ga
 
         private void HandleOnCoinChanged(int obj)
         {
-            _coinText.text = obj.ToString();
+            _coinText.text = "GOLD: " + obj.ToString();
         }
 
         private void OnDisable()

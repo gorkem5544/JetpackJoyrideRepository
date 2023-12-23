@@ -80,7 +80,7 @@ public class GameState : IState
 {
     public void EnterState()
     {
-
+        PlayerManager.Instance._instantiatePlayer.Rigidbody2D.constraints = RigidbodyConstraints2D.None;
     }
 
     public void ExitState()
@@ -106,6 +106,7 @@ public class GameOverState : IState
     public void EnterState()
     {
         _timer = 0;
+        PlayerManager.Instance._instantiatePlayer.Rigidbody2D.constraints = RigidbodyConstraints2D.FreezeAll;
     }
 
     public void ExitState()
@@ -118,3 +119,4 @@ public class GameOverState : IState
         Debug.Log("Dead Update");
     }
 }
+

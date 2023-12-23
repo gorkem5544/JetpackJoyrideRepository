@@ -8,11 +8,9 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.UserInterfaces.Concretes.Ga
     public class GameOverPanel : MonoBehaviour
     {
         [SerializeField] PlayerReSpawnButton _playerReSpawnButton;
-        IGoldManger _playerGoldManager;
-        private void Start()
+        private void OnEnable()
         {
-            _playerGoldManager = PlayerManager.Instance._instantiatePlayer.GoldManger;
-            _playerReSpawnButton.gameObject.SetActive(_playerGoldManager.CurrentGold > _playerGoldManager.PlayerReSpawnCost());
+            _playerReSpawnButton.gameObject.SetActive(PlayerManager.Instance._instantiatePlayer.GoldManger.GameInGoldAmount >= PlayerManager.Instance._instantiatePlayer.PlayerHealth.HitCount * 5);
         }
     }
 }

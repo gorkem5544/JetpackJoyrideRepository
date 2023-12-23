@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Assembly_CSharp.Assets.GameFolders.Scripts.UserInterfaces.Concretes.MenuSceneUis.CostumeUis.CostumeButtons;
+using UnityEngine.UI;
 
 namespace Assembly_CSharp.Assets.GameFolders.Scripts.UserInterfaces.Concretes.MenuSceneUis.CostumeUis
 {
@@ -24,9 +25,22 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.UserInterfaces.Concretes.Me
                     }
                 }
             }
+            foreach (var item in _playerSelectButtons)
+            {
+                item.onClick += HandleOnClick;
+            }
 
         }
 
+        private void HandleOnClick(PlayerSelectButton image)
+        {
+            foreach (var item in _playerSelectButtons)
+            {
+                item.SetDefaultColor();
+            }
+            image.SetSelectionColor();
+
+        }
     }
 
 }

@@ -60,7 +60,6 @@ public class GoldManager : SingletonDontDestroyMonoObject<GoldManager>, IGoldMan
     {
         _gameInGoldAmount += amount;
         _goldDataSO.GoldAmount += amount;
-        //GoldChangedEvent.Invoke(_gameInGoldAmount);
         GoldChangedEventMethod();
         SaveScore();
     }
@@ -68,7 +67,6 @@ public class GoldManager : SingletonDontDestroyMonoObject<GoldManager>, IGoldMan
     {
         _gameInGoldAmount -= amount;
         _goldDataSO.GoldAmount -= amount;
-        //GoldChangedEvent.Invoke(_gameInGoldAmount);
         GoldChangedEventMethod();
         SaveScore();
     }
@@ -76,7 +74,6 @@ public class GoldManager : SingletonDontDestroyMonoObject<GoldManager>, IGoldMan
     {
         string value = JsonConvert.SerializeObject(_goldDataSO);
         PlayerPrefs.SetString(PLAYER_DATA_JSON_KEY, value);
-
     }
     private void GoldChangedEventMethod()
     {
@@ -88,7 +85,7 @@ public class GoldManager : SingletonDontDestroyMonoObject<GoldManager>, IGoldMan
     }
     public int PlayerReSpawnCost()
     {
-        return 10 * PlayerManager.Instance.Player.PlayerHealth.HitCount;
+        return 5 * PlayerManager.Instance.Player.PlayerHealth.HitCount;
     }
     public void ResetGold()
     {

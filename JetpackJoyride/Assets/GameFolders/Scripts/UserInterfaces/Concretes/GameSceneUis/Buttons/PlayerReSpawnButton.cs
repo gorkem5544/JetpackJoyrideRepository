@@ -11,28 +11,17 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.UserInterfaces.Concretes.Ga
     public class PlayerReSpawnButton : BaseButton
     {
         [SerializeField] TextMeshProUGUI _playerReviveCostInfoText;
-        private void Start()
+        int _reSpawnConst = 0;
+        protected override void OnEnable()
         {
-            // PlayerManager.Instance.PlayerController.GoldManger.OnCoinChanged += HandlePlayerReviveCost;
-        }
-
-        private void HandlePlayerReviveCost(int obj)
-        {
-            //_playerReviveCostInfoText.text = obj.ToString();
-        }
-
-        private void OnDisable()
-        {
-            //PlayerManager.Instance.PlayerController.GoldManger.OnCoinChanged -= HandlePlayerReviveCost;
-
+            base.OnEnable();
+            _reSpawnConst = PlayerManager.Instance._instantiatePlayer.PlayerHealth.HitCount * 5;
         }
         protected override void ButtonOnClick()
         {
-            //PlayerManager.Instance.PlayerController.PlayerHealth.PlayerReviveEvent?.Invoke();
-            //Debug.Log(PlayerManager.Instance.PlayerController.GoldManger.PlayerReSpawnCost());
-            //PlayerManager.Instance.PlayerController.GoldManger.DecreaseGoldAmount(PlayerManager.Instance.PlayerController.GoldManger.PlayerReSpawnCost());
-            //Debug.Log(PlayerManager.Instance.PlayerController.GoldManger.PlayerReSpawnCost());
+            PlayerManager.Instance._instantiatePlayer.PlayerHealth.PlayerReviveEvent?.Invoke();
             GameManager.Instance.ChangeGameState(GameManagerState.GameState);
+            GoldManager.Instance.DecreaseGameInGoldAmount(_reSpawnConst);
         }
     }
 
@@ -40,7 +29,7 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.UserInterfaces.Concretes.Ga
 public abstract class BaseButton : MonoBehaviour
 {
     [SerializeField] protected Button _button;
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         _button.onClick.AddListener(ButtonOnClick);
     }
