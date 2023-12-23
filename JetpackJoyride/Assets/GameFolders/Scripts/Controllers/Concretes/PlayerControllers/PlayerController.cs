@@ -19,7 +19,7 @@ public interface IPlayerController : IEntityController
 public class PlayerController : MonoBehaviour, IPlayerController
 {
     InputReader _input;
-    Rigidbody2D _rigidbody2D;
+    [SerializeField] Rigidbody2D _rigidbody2D;
 
     public Rigidbody2D Rigidbody2D => _rigidbody2D;
     public InputReader InputReader => _input;
@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
     private void OnValidate()
     {
         _playerHealth = GetComponent<PlayerHealth>();
-        
+
     }
     private void Start()
     {
@@ -64,11 +64,9 @@ public class PlayerController : MonoBehaviour, IPlayerController
     private void FixedUpdate()
     {
         _playerAddForceMovement.ForceUpMovementFixedTick();
-
     }
     private void OnDisable()
     {
-
         _goldManger.PlayerPrefsGetScore();
     }
 }
@@ -104,20 +102,14 @@ public abstract class BasePlayerMovement : IPlayerMovement
         _playerController = playerController;
     }
     public abstract void ForceUpMovementFixedTick();
-
-
     public void ForceUpMovementUpdateTick()
     {
         _yBoundary = math.clamp(_playerController.transform.position.y, -YTransform, YTransform);
         _playerController.transform.position = new Vector3(_playerController.transform.position.x, _yBoundary, _playerController.transform.position.z);
-
-
-        bool isPlayerOutsideBoundary = _playerController.transform.position.y >= YTransform || _playerController.transform.position.y <= -YTransform;
-        if (isPlayerOutsideBoundary)
+        if (_playerController.transform.position.y >= YTransform || _playerController.transform.position.y <= -YTransform)
         {
             _playerController.Rigidbody2D.velocity = Vector2.zero;
         }
-        //_playerController.Rigidbody2D.velocity=Mathf.Clamp
     }
 
 }

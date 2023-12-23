@@ -13,6 +13,5 @@ MonoBehaviour:
   m_Name: RedPlayer
   m_EditorClassIdentifier: 
   playerCharacterName: Red
-  Color: {r: 0, g: 0, b: 0, a: 0}
-  playerController: {fileID: 1891863175597696740, guid: bcfbf1d9e2b12044aa6fa41419e14126, type: 3}
+  Color: {r: 1, g: 0, b: 0, a: 1}
   PlayerTypeEnum: 3

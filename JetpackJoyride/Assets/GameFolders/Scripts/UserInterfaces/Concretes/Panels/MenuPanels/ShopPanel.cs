@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class ShopPanel : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] List<PlayerPurchaseButton> playerDetailSOs = new List<PlayerPurchaseButton>();
+    private void OnEnable()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        foreach (var b in playerDetailSOs)
+        {
+            foreach (var a in ShopManager.Instance.PlayerDetailLists)
+            {
+                if (a.PlayerTypeEnum == b._playerDetailSO.PlayerTypeEnum)
+                {
+                    b.gameObject.SetActive(false);
+                }
+            }
+        }
     }
 }

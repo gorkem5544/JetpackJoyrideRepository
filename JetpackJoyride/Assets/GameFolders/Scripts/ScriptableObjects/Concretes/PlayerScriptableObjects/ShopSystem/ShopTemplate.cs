@@ -12,7 +12,7 @@ public class ShopTemplate : BaseButton
     protected override void ButtonOnClick()
     {
         Debug.Log("A");
-        ShopManager.Instance.SetDAta(shopItem);
+        //ShopManager.Instance.SaveData(shopItem);
         Destroy(this.gameObject);
         //action?.Invoke(ShopItem);
     }

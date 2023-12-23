@@ -5,12 +5,9 @@ using Unity.VisualScripting;
 using UnityEngine;
 public interface IGoldManger
 {
-    void IncreaseGoldAmount(int amount);
-    void DecreaseGoldAmount(int amount);
     int PlayerReSpawnCost();
     void PlayerPrefsGetScore();
-    System.Action<int> OnCoinChanged { get; set; }
-    System.Action<int> GameInGoldChanged { get; set; }
+    System.Action<int> GoldChangedEvent { get; set; }
     int CurrentGold { get; }
     int GameInGoldAmount { get; }
     void IncreaseGameInGoldAmount(int amount);
@@ -22,11 +19,8 @@ public class GoldManager : SingletonDontDestroyMonoObject<GoldManager>, IGoldMan
 {
 
     const string PLAYER_DATA_JSON_KEY = "PlayerDataJson";
-    public Action<int> OnCoinChanged { get; set; }
-    public Action<int> GameInGoldChanged { get; set; }
+    public Action<int> GoldChangedEvent { get; set; }
 
-    PlayerManager _playerManager;
-    public PlayerManager PlayerManager { get => _playerManager; set => _playerManager = value; }
 
     GoldDataSO _goldDataSO;
 
@@ -41,66 +35,52 @@ public class GoldManager : SingletonDontDestroyMonoObject<GoldManager>, IGoldMan
     string jsonValue;
     private void Start()
     {
-        _playerManager = PlayerManager.Instance;
+
         PlayerPrefsGetScore();
-        Debug.Log(_playerManager);
+
     }
 
     public void PlayerPrefsGetScore()
     {
         if (PlayerPrefs.HasKey(PLAYER_DATA_JSON_KEY))
         {
-            // jsonValue = PlayerPrefs.GetString(PLAYER_DATA_JSON_KEY);
-            //_playerManager.PlayerDataSO = JsonConvert.DeserializeObject<PlayerDataSO>(jsonValue);
-            //_currentGold = _playerManager.PlayerDataSO.Score;
             jsonValue = PlayerPrefs.GetString(PLAYER_DATA_JSON_KEY);
             _goldDataSO = JsonConvert.DeserializeObject<GoldDataSO>(jsonValue);
             Debug.Log(_goldDataSO.GoldAmount);
         }
         else
         {
-            //_playerManager.PlayerDataSO.Score = 0;
             _goldDataSO = new GoldDataSO();
             _goldDataSO.GoldAmount = 0;
         }
     }
 
-    public void IncreaseGoldAmount(int amount)
-    {
-        _playerManager.PlayerDataSO.Score += amount;
-        CoinChangedEvent();
-    }
-    public void DecreaseGoldAmount(int amount)
-    {
-        _playerManager.PlayerDataSO.Score -= amount;
-        CoinChangedEvent();
-    }
 
     public void IncreaseGameInGoldAmount(int amount)
     {
         _gameInGoldAmount += amount;
         _goldDataSO.GoldAmount += amount;
-        CoinChangedEvent();
-        GameInGoldChanged.Invoke(_gameInGoldAmount);
+        //GoldChangedEvent.Invoke(_gameInGoldAmount);
+        GoldChangedEventMethod();
+        SaveScore();
     }
     public void DecreaseGameInGoldAmount(int amount)
     {
         _gameInGoldAmount -= amount;
         _goldDataSO.GoldAmount -= amount;
-        CoinChangedEvent();
-        GameInGoldChanged.Invoke(_gameInGoldAmount);
-
+        //GoldChangedEvent.Invoke(_gameInGoldAmount);
+        GoldChangedEventMethod();
+        SaveScore();
     }
-    private void CoinChangedEvent()
+    private void SaveScore()
     {
-        //string value = JsonConvert.SerializeObject(_playerManager.PlayerDataSO);
-        //PlayerPrefs.SetString(PLAYER_DATA_JSON_KEY, value);
         string value = JsonConvert.SerializeObject(_goldDataSO);
         PlayerPrefs.SetString(PLAYER_DATA_JSON_KEY, value);
-        Debug.Log(value);
-        //PlayerPrefsGetScore();
-        OnCoinChanged?.Invoke(_playerManager.PlayerDataSO.Score);
 
+    }
+    private void GoldChangedEventMethod()
+    {
+        GoldChangedEvent.Invoke(_gameInGoldAmount);
     }
     public int SumGameAndMenuScore()
     {
@@ -108,7 +88,10 @@ public class GoldManager : SingletonDontDestroyMonoObject<GoldManager>, IGoldMan
     }
     public int PlayerReSpawnCost()
     {
-        Debug.Log(_playerManager.Player);
-        return 10 * _playerManager.Player.PlayerHealth.HitCount;
+        return 10 * PlayerManager.Instance.Player.PlayerHealth.HitCount;
+    }
+    public void ResetGold()
+    {
+
     }
 }

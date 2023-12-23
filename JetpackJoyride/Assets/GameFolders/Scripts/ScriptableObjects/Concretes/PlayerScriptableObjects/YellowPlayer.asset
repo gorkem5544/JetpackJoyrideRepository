@@ -13,6 +13,5 @@ MonoBehaviour:
   m_Name: YellowPlayer
   m_EditorClassIdentifier: 
   playerCharacterName: Yellow
-  Color: {r: 1, g: 0.9375496, b: 0, a: 1}
-  playerController: {fileID: 459347364982286423, guid: fcb44fceed6a16e438a69342d5f71ea4, type: 3}
+  Color: {r: 1, g: 1, b: 0, a: 1}
   PlayerTypeEnum: 1

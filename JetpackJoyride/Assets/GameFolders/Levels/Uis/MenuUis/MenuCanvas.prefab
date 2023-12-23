@@ -12,8 +12,6 @@ GameObject:
   - component: {fileID: 3178288}
   - component: {fileID: 3178287}
   - component: {fileID: 3178289}
-  - component: {fileID: 2055174747}
-  - component: {fileID: 2055174752}
   m_Layer: 5
   m_Name: ShopPanel
   m_TagString: Untagged
@@ -91,47 +89,16 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3178285}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 53dafeea0217656479a2981327192c95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2055174747
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3178285}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90d526939c6020e4c82f7002316780e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playerBuyButtons: []
---- !u!114 &2055174752
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3178285}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfa64f82ebdd69a44874e72f2d870a91, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shopItems:
-  - {fileID: 11400000, guid: 19a4e0b9c25e6114a828327b8b0d63fa, type: 2}
-  - {fileID: 11400000, guid: d51f2caf648d5e04abbd9b543ffdbf9a, type: 2}
-  - {fileID: 11400000, guid: 5eaa6eb0c655ff64d9ed9fd634a35a9f, type: 2}
-  - {fileID: 11400000, guid: 40a5c54bb7340b847a83ecf3e98924b6, type: 2}
-  _shopTemplates:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  _parent: {fileID: 3178286}
+  playerDetailSOs:
+  - {fileID: 480809131}
+  - {fileID: 1838240650}
+  - {fileID: 1893841154}
+  - {fileID: 1014586213}
 --- !u!1 &120744257
 GameObject:
   m_ObjectHideFlags: 0
@@ -692,7 +659,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &480809127
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1207,7 +1174,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &810664909
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1288,11 +1255,6 @@ MonoBehaviour:
   - {fileID: 4158815616110031929, guid: c9cc010ed3992e04a84e0a65c0cf0f16, type: 3}
   - {fileID: 4527235805273892028, guid: 3b6cb6aa10d430440a8641083a062fb9, type: 3}
   - {fileID: 4564246085347884243, guid: afefa54af1578cd4f8afba5dd962113e, type: 3}
-  _playerBuyButtons:
-  - {fileID: 480809131}
-  - {fileID: 1838240650}
-  - {fileID: 1893841154}
-  - {fileID: 1014586213}
   yellowPlayerSelectButtons:
   - {fileID: 1973439695}
   - {fileID: 2023956799}
@@ -1453,7 +1415,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1014586212
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2425,7 +2387,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1838240649
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2562,7 +2524,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1893841153
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2679,7 +2641,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 1893841155}
-  _playerDetailSO: {fileID: 11400000, guid: e7bb4932c3eea1b42b1df376cbd4c140, type: 2}
+  _playerDetailSO: {fileID: 11400000, guid: 96a112283bb14e24d9396133778b5ef5, type: 2}
 --- !u!1 &2008990058
 GameObject:
   m_ObjectHideFlags: 0
@@ -2962,6 +2924,7 @@ GameObject:
   - component: {fileID: 2144393080}
   - component: {fileID: 2144393082}
   - component: {fileID: 2144393081}
+  - component: {fileID: 1662331204}
   m_Layer: 5
   m_Name: HighScoreText
   m_TagString: Untagged
@@ -3086,6 +3049,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1662331204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2144393079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26d9d3b8eaa69f74d858e34db6a3ba25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _textMeshProUGUI: {fileID: 2144393081}
 --- !u!1 &4047173676237153969
 GameObject:
   m_ObjectHideFlags: 0
@@ -3689,6 +3665,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 810664909}
     m_Modifications:
+    - target: {fileID: 8823887713562224344, guid: 2220925a5793c774685520ddc77b93bd, type: 3}
+      propertyPath: _playerDetailSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 96a112283bb14e24d9396133778b5ef5, type: 2}
     - target: {fileID: 8823887713562224348, guid: 2220925a5793c774685520ddc77b93bd, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

@@ -14,7 +14,7 @@ public abstract class BarrierGenericPool : SingletonDontDestroyMonoObject<Barrie
     private PlayerHealth _playerHealth;
     private void Start()
     {
-        _playerHealth = PlayerManager.Instance.PlayerController.PlayerHealth;
+        _playerHealth = PlayerManager.Instance._instantiatePlayer.PlayerHealth;
         GrowPool();
         _playerHealth.PlayerHitEvent += ResetAllObject;
         _playerHealth.PlayerReviveEvent += ResetAllObject;

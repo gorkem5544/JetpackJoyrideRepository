@@ -5,7 +5,7 @@ using Assembly_CSharp.Assets.GameFolders.Scripts.UserInterfaces.Concretes.Button
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CostumesPanel : MonoBehaviour
+public class CostumePanel : MonoBehaviour
 {
     [SerializeField] PlayerSelectButton[] _yellowPlayerSelectButton;
     public List<PlayerSelectButton> yellowPlayerSelectButtons;
@@ -15,9 +15,6 @@ public class CostumesPanel : MonoBehaviour
     {
         ListhandleOnSpawn();
     }
-    /// <summary>
-    /// TODO: OPtimize
-    /// </summary>
     List<PlayerDetailSO> playerDetailSOs = new List<PlayerDetailSO>();
     private void ListhandleOnSpawn()
     {
@@ -37,6 +34,7 @@ public class CostumesPanel : MonoBehaviour
                 {
                     Debug.Log(item.PlayerTypeEnum + "+" + P._playerDetailSO.PlayerTypeEnum);
                     Debug.Log("Eşit DEğil");
+
                 }
             }
         }

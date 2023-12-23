@@ -18,9 +18,9 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.UserInterfaces.Concretes.Ga
         }
         private void Start()
         {
-            _playerGoldManager = PlayerManager.Instance.PlayerController.GoldManger;
+            _playerGoldManager = PlayerManager.Instance._instantiatePlayer.GoldManger;
             //_playerGoldManager.OnCoinChanged += HandleOnCoinChanged;
-            _playerGoldManager.GameInGoldChanged += HandleOnCoinChanged;
+            _playerGoldManager.GoldChangedEvent += HandleOnCoinChanged;
         }
 
         private void HandleOnCoinChanged(int obj)
@@ -30,7 +30,7 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.UserInterfaces.Concretes.Ga
 
         private void OnDisable()
         {
-            _playerGoldManager.GameInGoldChanged -= HandleOnCoinChanged;
+            _playerGoldManager.GoldChangedEvent -= HandleOnCoinChanged;
 
         }
 

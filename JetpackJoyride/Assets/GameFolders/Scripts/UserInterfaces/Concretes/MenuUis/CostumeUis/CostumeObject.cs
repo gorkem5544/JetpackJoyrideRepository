@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Assembly_CSharp.Assets.GameFolders.Scripts.UserInterfaces.Concretes.Objects.MenuObjects
 {
-    public class CostumesObject : MonoBehaviour
+    public class CostumeObject : MonoBehaviour
     {
         [SerializeField] GameObject _panel;
         [SerializeField] CostumesPanelOpeningButton _costumesPanelOpeningButton;

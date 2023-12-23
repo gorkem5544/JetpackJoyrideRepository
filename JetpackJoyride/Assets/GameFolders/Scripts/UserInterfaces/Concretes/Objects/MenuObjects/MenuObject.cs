@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class MenuObject : MonoBehaviour
 {
-    [SerializeField] CostumesObject _costumesObject;
+    [SerializeField] CostumeObject _costumesObject;
     [SerializeField] ShopObject _shopObject;
     [SerializeField] MenuPanel _menuPanel;
     private void OnEnable()

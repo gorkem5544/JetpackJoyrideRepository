@@ -7,9 +7,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2004740790, guid: c88331d323e89344e98cf7a53f685d6d, type: 3}
+      propertyPath: _rigidbody2D
+      value: 
+      objectReference: {fileID: 459347364982286425}
     - target: {fileID: 1127107115514319609, guid: c88331d323e89344e98cf7a53f685d6d, type: 3}
       propertyPath: m_Name
-      value: Player
+      value: Yellow-Player
       objectReference: {fileID: 0}
     - target: {fileID: 2009667477258409411, guid: c88331d323e89344e98cf7a53f685d6d, type: 3}
       propertyPath: m_RootOrder
@@ -57,3 +61,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c88331d323e89344e98cf7a53f685d6d, type: 3}
+--- !u!50 &459347364982286425 stripped
+Rigidbody2D:
+  m_CorrespondingSourceObject: {fileID: 2004740792, guid: c88331d323e89344e98cf7a53f685d6d, type: 3}
+  m_PrefabInstance: {fileID: 459347365702796001}
+  m_PrefabAsset: {fileID: 0}

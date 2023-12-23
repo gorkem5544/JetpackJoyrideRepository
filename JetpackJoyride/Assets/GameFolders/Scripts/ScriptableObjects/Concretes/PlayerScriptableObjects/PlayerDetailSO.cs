@@ -8,7 +8,7 @@ public class PlayerDetailSO : ScriptableObject
 {
     public string playerCharacterName;
     public Color Color;
-    public PlayerController playerController;
+    //public PlayerController playerController;
     public PlayerTypeEnum PlayerTypeEnum;
 
 }

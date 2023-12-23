@@ -69,8 +69,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce2bff99410598f428c3fc7fd6a6d3f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rigidbody2D: {fileID: 2004740792}
   _playerSO: {fileID: 11400000, guid: 1e1b2e89ca3275341879a2d24b1b544d, type: 2}
-  _goldManger: {fileID: 637065927149122113, guid: 73f131e2eaa52c94baac466ea9c137af, type: 3}
 --- !u!114 &-4044679256499272056
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -183,7 +183,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 2747690628134850419, guid: b670ab75dde984907b8570040daa08c5, type: 3}
-  m_Color: {r: 0, g: 0.080596924, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

@@ -12,7 +12,7 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.UserInterfaces.Concretes.Ga
         private PlayerHealth _playerHealth;
         private void Start()
         {
-            _playerHealth = PlayerManager.Instance.PlayerController.PlayerHealth;
+            _playerHealth = PlayerManager.Instance._instantiatePlayer.PlayerHealth;
             ChangeGameOverPanelActive(false);
 
             _playerHealth.PlayerHitEvent += HandleOnTakeHit;

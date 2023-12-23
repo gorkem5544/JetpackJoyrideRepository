@@ -11,7 +11,7 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.UserInterfaces.Concretes.Ga
         IGoldManger _playerGoldManager;
         private void Start()
         {
-            _playerGoldManager = PlayerManager.Instance.PlayerController.GoldManger;
+            _playerGoldManager = PlayerManager.Instance._instantiatePlayer.GoldManger;
             _playerReSpawnButton.gameObject.SetActive(_playerGoldManager.CurrentGold > _playerGoldManager.PlayerReSpawnCost());
         }
     }

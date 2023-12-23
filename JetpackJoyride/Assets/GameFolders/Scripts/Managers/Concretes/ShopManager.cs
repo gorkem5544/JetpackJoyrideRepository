@@ -6,45 +6,39 @@ using UnityEngine;
 
 public class ShopManager : SingletonDontDestroyMonoObject<ShopManager>
 {
-    private const string PLAYER_DATA_JSON_KEY = "a";
-    public List<ShopItem> buyingList { get; set; }
-    public Action action { get; set; }
-    public List<PlayerDetailSO> PlayerDetailLists { get => playerDetailLists; set => playerDetailLists = value; }
+    private const string PURCHASED_COSTUME_JSON_KEY = "PurchasedCostumes";
+    private List<PlayerDetailSO> _playerDetailLists = new List<PlayerDetailSO>();
+    public List<PlayerDetailSO> PlayerDetailLists { get => _playerDetailLists; set => _playerDetailLists = value; }
 
+    private void Start()
+    {
+        BoughtBringCharacters();
+
+    }
     public void BoughtBringCharacters()
     {
-        if (PlayerPrefs.HasKey(PLAYER_DATA_JSON_KEY))
+        if (PlayerPrefs.HasKey(PURCHASED_COSTUME_JSON_KEY))
         {
-            string jsonValue = PlayerPrefs.GetString(PLAYER_DATA_JSON_KEY);
-            buyingList = JsonConvert.DeserializeObject<List<ShopItem>>(jsonValue);
+            string jsonValue = PlayerPrefs.GetString(PURCHASED_COSTUME_JSON_KEY);
+            _playerDetailLists = JsonConvert.DeserializeObject<List<PlayerDetailSO>>(jsonValue, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            });
         }
-        else
-        {
-            buyingList = new List<ShopItem>();
-        }
-
-
 
     }
-    public void SetDAta(ShopItem shopItems)
+    public void SetDAta()
     {
-        buyingList.Add(shopItems);
-        action?.Invoke();
-        string value = JsonConvert.SerializeObject(buyingList);
-        PlayerPrefs.SetString(PLAYER_DATA_JSON_KEY, value);
+        string value = JsonConvert.SerializeObject(_playerDetailLists, new JsonSerializerSettings()
+        {
+            ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+        });
+        PlayerPrefs.SetString(PURCHASED_COSTUME_JSON_KEY, value);
     }
 
-
-    private List<PlayerDetailSO> playerDetailLists = new List<PlayerDetailSO>();
-    public System.Action<PlayerDetailSO> playerDetailListsAction;
     public void PlayerDetailSave(PlayerDetailSO playerDetailSO)
     {
-        Debug.Log(playerDetailSO);
-        PlayerDetailLists.Add(playerDetailSO);
-        foreach (var item in PlayerDetailLists)
-        {
-            Debug.Log(item);
-        }
-        playerDetailListsAction?.Invoke(playerDetailSO);
+        _playerDetailLists.Add(playerDetailSO);
+        SetDAta();
     }
 }
