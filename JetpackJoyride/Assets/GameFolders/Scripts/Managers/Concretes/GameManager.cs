@@ -18,7 +18,6 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.Managers.Concretes
         GameManagerState _gameManagerState;
         IStateMachine _stateMachine;
         [SerializeField] PlayerDetailSO playerDetailSO;
-        [SerializeField] PlayerDetailListSO playerDetailListSO;
         [SerializeField] PlayerController _playerController;
 
         PlayerController playerController { get; set; }

@@ -470,7 +470,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26d9d3b8eaa69f74d858e34db6a3ba25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _textMeshProUGUI: {fileID: 831248974}
+  _highScoreText: {fileID: 831248974}
 --- !u!1 &948693119
 GameObject:
   m_ObjectHideFlags: 0
@@ -676,6 +676,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce2bff99410598f428c3fc7fd6a6d3f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rigidbody2D: {fileID: 0}
   _playerSO: {fileID: 11400000, guid: 1e1b2e89ca3275341879a2d24b1b544d, type: 2}
 --- !u!50 &1518629459
 Rigidbody2D:

@@ -13,7 +13,6 @@ public class ShopManager : SingletonDontDestroyMonoObject<ShopManager>
     private void Start()
     {
         BoughtBringCharacters();
-
     }
     public void BoughtBringCharacters()
     {
@@ -25,7 +24,6 @@ public class ShopManager : SingletonDontDestroyMonoObject<ShopManager>
                 ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             });
         }
-
     }
     public void SetDAta()
     {
