@@ -10,38 +10,49 @@ public enum SpawningObjectTypeEnum
 {
     BarrierEnemySpawn, LaserEnemySpawn, Delay, Gold, NotSpawn, Rocket
 }
-
-public interface ISpawnerControllerRocketSpawnService
+public interface ISpawnerControllerChangeStateService
+{
+    void SpawnerControllerChangeState(SpawningObjectTypeEnum enemySpawnType);
+}
+public interface ISpawnerControllerStateMachineService
+{
+    IStateMachine SpawnerControllerStateMachine { get; }
+}
+public interface ISpawnerControllerRocketSpawnService : ISpawnerControllerChangeStateService, ISpawnerControllerStateMachineService
 {
     RocketSpawner RocketSpawner { get; }
-    IStateMachine StateMachine { get; }
-
 }
-public interface ISpawnerController
+
+public interface ISpawnerControllerLaserSpawnService : ISpawnerControllerChangeStateService, ISpawnerControllerStateMachineService
 {
-    IStateMachine StateMachine { get; }
-    BarrierSpawner BarrierSpawner { get; }
     LaserSpawner LaserSpawner { get; }
-    GoldSpawner GoldSpawner { get; }
-    RocketSpawner RocketSpawner { get; }
 }
+public interface ISpawnerControllerGoldSpawnService : ISpawnerControllerChangeStateService, ISpawnerControllerStateMachineService
+{
+    GoldSpawner GoldSpawner { get; }
+}
+
+public interface ISpawnerControllerBarrierSpawnService : ISpawnerControllerChangeStateService, ISpawnerControllerStateMachineService
+{
+    BarrierSpawner BarrierSpawner { get; }
+}
+
 namespace Assembly_CSharp.Assets.GameFolders.Scripts.Managers.Concretes
 {
-    public class SpawnerController : MonoBehaviour, ISpawnerController, ISpawnerControllerRocketSpawnService
+    public class SpawnerController : MonoBehaviour, ISpawnerControllerBarrierSpawnService, ISpawnerControllerLaserSpawnService, ISpawnerControllerRocketSpawnService, ISpawnerControllerGoldSpawnService
     {
-        IStateMachine _stateMachine;
-        SpawningObjectTypeEnum _spawningObjectTypeEnum;
+        IStateMachine _spawnerControllerStateMachine;
         BarrierSpawner _barrierSpawner;
         LaserSpawner _laserSpawner;
         GoldSpawner _goldSpawner;
         [SerializeField] RocketSpawner _rocketSpawner;
+        SpawningObjectTypeEnum _spawningObjectTypeEnum;
 
-        public BarrierSpawner BarrierSpawner { get => _barrierSpawner; set => _barrierSpawner = value; }
-        public LaserSpawner LaserSpawner { get => _laserSpawner; set => _laserSpawner = value; }
-        public GoldSpawner GoldSpawner { get => _goldSpawner; set => _goldSpawner = value; }
-        public IStateMachine StateMachine => _stateMachine;
+        public IStateMachine SpawnerControllerStateMachine => _spawnerControllerStateMachine;
+        public BarrierSpawner BarrierSpawner => _barrierSpawner;
+        public LaserSpawner LaserSpawner => _laserSpawner;
+        public GoldSpawner GoldSpawner => _goldSpawner;
         public RocketSpawner RocketSpawner => _rocketSpawner;
-
 
 
         private void Awake()
@@ -49,7 +60,7 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.Managers.Concretes
             _barrierSpawner = GameObject.FindWithTag("BarrierSpawner").transform.GetComponent<BarrierSpawner>();
             _laserSpawner = GameObject.FindWithTag("LaserSpawner").transform.GetComponent<LaserSpawner>();
             _goldSpawner = GameObject.FindWithTag("GoldSpawner").transform.GetComponent<GoldSpawner>();
-            _stateMachine = new StateMachine();
+            _spawnerControllerStateMachine = new StateMachine();
         }
         private void Start()
         {
@@ -60,28 +71,28 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.Managers.Concretes
             SpawnerControllerNotSpawnState _spawnerControllerNotSpawnState = new SpawnerControllerNotSpawnState(this);
             SpawnerControllerRocketSpawnState _spawnerControllerRocketSpawnState = new SpawnerControllerRocketSpawnState(this);
 
-            _stateMachine.SetState(_spawnerControllerDelayState);
+            _spawnerControllerStateMachine.SetState(_spawnerControllerDelayState);
 
-            _stateMachine.SetNormalStateTransitions(_spawnerControllerDelayState, _spawnerControllerBarrierEnemySpawnState, () => _spawningObjectTypeEnum == SpawningObjectTypeEnum.BarrierEnemySpawn);
-            _stateMachine.SetNormalStateTransitions(_spawnerControllerBarrierEnemySpawnState, _spawnerControllerDelayState, () => _spawningObjectTypeEnum == SpawningObjectTypeEnum.Delay);
+            _spawnerControllerStateMachine.SetNormalStateTransitions(_spawnerControllerDelayState, _spawnerControllerBarrierEnemySpawnState, () => _spawningObjectTypeEnum == SpawningObjectTypeEnum.BarrierEnemySpawn);
+            _spawnerControllerStateMachine.SetNormalStateTransitions(_spawnerControllerBarrierEnemySpawnState, _spawnerControllerDelayState, () => _spawningObjectTypeEnum == SpawningObjectTypeEnum.Delay);
 
-            _stateMachine.SetNormalStateTransitions(_spawnerControllerDelayState, _spawnerControllerLaserEnemySpawnState, () => _spawningObjectTypeEnum == SpawningObjectTypeEnum.LaserEnemySpawn);
-            _stateMachine.SetNormalStateTransitions(_spawnerControllerLaserEnemySpawnState, _spawnerControllerDelayState, () => _spawningObjectTypeEnum == SpawningObjectTypeEnum.Delay);
+            _spawnerControllerStateMachine.SetNormalStateTransitions(_spawnerControllerDelayState, _spawnerControllerLaserEnemySpawnState, () => _spawningObjectTypeEnum == SpawningObjectTypeEnum.LaserEnemySpawn);
+            _spawnerControllerStateMachine.SetNormalStateTransitions(_spawnerControllerLaserEnemySpawnState, _spawnerControllerDelayState, () => _spawningObjectTypeEnum == SpawningObjectTypeEnum.Delay);
 
-            _stateMachine.SetNormalStateTransitions(_spawnerControllerDelayState, _spawnerControllerGoldSpawnState, () => _spawningObjectTypeEnum == SpawningObjectTypeEnum.Gold);
-            _stateMachine.SetNormalStateTransitions(_spawnerControllerGoldSpawnState, _spawnerControllerDelayState, () => _spawningObjectTypeEnum == SpawningObjectTypeEnum.Delay);
+            _spawnerControllerStateMachine.SetNormalStateTransitions(_spawnerControllerDelayState, _spawnerControllerGoldSpawnState, () => _spawningObjectTypeEnum == SpawningObjectTypeEnum.Gold);
+            _spawnerControllerStateMachine.SetNormalStateTransitions(_spawnerControllerGoldSpawnState, _spawnerControllerDelayState, () => _spawningObjectTypeEnum == SpawningObjectTypeEnum.Delay);
 
-            _stateMachine.SetAnyStateTransitions(_spawnerControllerNotSpawnState, () => GameManager.Instance.GameManagerState == GameManagerState.GameOverState);
-            _stateMachine.SetNormalStateTransitions(_spawnerControllerNotSpawnState, _spawnerControllerDelayState, () => _spawningObjectTypeEnum == SpawningObjectTypeEnum.Delay);
+            _spawnerControllerStateMachine.SetAnyStateTransitions(_spawnerControllerNotSpawnState, () => GameManager.Instance.GameManagerState == GameManagerState.GameOverState);
+            _spawnerControllerStateMachine.SetNormalStateTransitions(_spawnerControllerNotSpawnState, _spawnerControllerDelayState, () => _spawningObjectTypeEnum == SpawningObjectTypeEnum.Delay);
 
-            _stateMachine.SetNormalStateTransitions(_spawnerControllerDelayState, _spawnerControllerRocketSpawnState, () => _spawningObjectTypeEnum == SpawningObjectTypeEnum.Rocket);
-            _stateMachine.SetNormalStateTransitions(_spawnerControllerRocketSpawnState, _spawnerControllerDelayState, () => _spawningObjectTypeEnum == SpawningObjectTypeEnum.Delay);
+            _spawnerControllerStateMachine.SetNormalStateTransitions(_spawnerControllerDelayState, _spawnerControllerRocketSpawnState, () => _spawningObjectTypeEnum == SpawningObjectTypeEnum.Rocket);
+            _spawnerControllerStateMachine.SetNormalStateTransitions(_spawnerControllerRocketSpawnState, _spawnerControllerDelayState, () => _spawningObjectTypeEnum == SpawningObjectTypeEnum.Delay);
 
 
         }
         private void Update()
         {
-            _stateMachine.UpdateTick();
+            _spawnerControllerStateMachine.UpdateTick();
 
         }
         public void SpawnerControllerChangeState(SpawningObjectTypeEnum enemySpawnType) => _spawningObjectTypeEnum = enemySpawnType;
@@ -89,111 +100,84 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.Managers.Concretes
     }
 
 }
-class SpawnerControllerBarrierEnemySpawnState : IState
+class SpawnerControllerBarrierEnemySpawnState : BaseTimeDependentState
 {
-    SpawnerController _enemyManager;
-    float _currentSpawnTime = 0;
-    public SpawnerControllerBarrierEnemySpawnState(SpawnerController enemyManager)
+    ISpawnerControllerBarrierSpawnService _spawnerControllerBarrierSpawnService;
+    public SpawnerControllerBarrierEnemySpawnState(ISpawnerControllerBarrierSpawnService spawnerControllerBarrierSpawnService)
     {
-        _enemyManager = enemyManager;
+        _spawnerControllerBarrierSpawnService = spawnerControllerBarrierSpawnService;
     }
-    public void EnterState()
+    public override void EnterState()
     {
-        _enemyManager.BarrierSpawner.ResetSpawnTime();
-
-        _currentSpawnTime = 0;
+        base.EnterState();
+        _spawnerControllerBarrierSpawnService.BarrierSpawner.ResetSpawnTime();
     }
 
-    public void ExitState()
+    public override void ExitState()
     {
-
-        _enemyManager.BarrierSpawner.ResetSpawnTime();
-        _currentSpawnTime = 0;
+        base.ExitState();
+        _spawnerControllerBarrierSpawnService.BarrierSpawner.ResetSpawnTime();
     }
 
-    public void UpdateState()
+    public override void UpdateState()
     {
-        _enemyManager.BarrierSpawner.SpawnerUpdateTick();
-        _currentSpawnTime += Time.deltaTime;
-        if (_currentSpawnTime > 10)
-        {
-            _enemyManager.SpawnerControllerChangeState(SpawningObjectTypeEnum.Delay);
-        }
-        Debug.Log("Barrier Update");
+        _spawnerControllerBarrierSpawnService.BarrierSpawner.SpawnerUpdateTick();
+        base.UpdateState();
 
+    }
+
+    protected override void Action()
+    {
+        _spawnerControllerBarrierSpawnService.SpawnerControllerChangeState(SpawningObjectTypeEnum.Delay);
+    }
+
+    protected override float MaxTime()
+    {
+        return 5;
     }
 }
-public class SpawnerControllerLaserEnemySpawnState : IState
+public class SpawnerControllerLaserEnemySpawnState : BaseTimeDependentState
 {
-    SpawnerController _enemyManager;
-    float _currentSpawnTime = 0;
-    public SpawnerControllerLaserEnemySpawnState(SpawnerController enemyManager)
+    ISpawnerControllerLaserSpawnService _spawnerControllerLaserSpawnService;
+    public SpawnerControllerLaserEnemySpawnState(ISpawnerControllerLaserSpawnService spawnerControllerLaserSpawnService)
     {
-        _enemyManager = enemyManager;
+        _spawnerControllerLaserSpawnService = spawnerControllerLaserSpawnService;
 
     }
-    public void EnterState()
+    public override void EnterState()
     {
-
-        _enemyManager.LaserSpawner.Spawn();
-        _currentSpawnTime = 0;
+        base.EnterState();
+        _spawnerControllerLaserSpawnService.LaserSpawner.Spawn();
     }
 
-    public void ExitState()
+    protected override float MaxTime()
     {
-        _currentSpawnTime = 0;
-
-
+        return 5;
     }
 
-    public void UpdateState()
+    protected override void Action()
     {
-        _currentSpawnTime += Time.deltaTime;
-        if (_currentSpawnTime > 5)
-        {
-            _enemyManager.SpawnerControllerChangeState(SpawningObjectTypeEnum.Delay);
-        }
-        Debug.Log("Laser Update");
-
-    }
-    public bool IsLaserEnemySpawn()
-    {
-        return _currentSpawnTime > 5;
+        _spawnerControllerLaserSpawnService.SpawnerControllerChangeState(SpawningObjectTypeEnum.Delay);
     }
 }
-public class SpawnerControllerDelayState : IState
+public class SpawnerControllerDelayState : BaseTimeDependentState
 {
-    protected SpawnerController _enemyManager;
-    float _currentSpawnTime = 0;
-    float _timeBoundary;
-
-    public SpawnerControllerDelayState(SpawnerController enemyManager)
+    protected ISpawnerControllerChangeStateService _spawnerControllerChangeStateService;
+    public SpawnerControllerDelayState(ISpawnerControllerChangeStateService spawnerControllerChangeStateService)
     {
-        _enemyManager = enemyManager;
-    }
-    public void EnterState()
-    {
-
-        _currentSpawnTime = 0;
-        _timeBoundary = UnityEngine.Random.Range(3, 6);
+        _spawnerControllerChangeStateService = spawnerControllerChangeStateService;
     }
 
-    public void ExitState()
+    protected override void Action()
     {
-
-        _currentSpawnTime = 0;
+        _spawnerControllerChangeStateService.SpawnerControllerChangeState(enemySpawnType());
     }
 
-    public void UpdateState()
+    protected override float MaxTime()
     {
-        _currentSpawnTime += Time.deltaTime;
-        if (_currentSpawnTime > _timeBoundary)
-        {
-            _enemyManager.SpawnerControllerChangeState((enemySpawnType()));
-        }
-        Debug.Log("Delay Update");
-
+        return 5;
     }
+
     SpawningObjectTypeEnum enemySpawnType()
     {
         int _randomIndex = UnityEngine.Random.Range(0, 5);
@@ -204,7 +188,7 @@ public class SpawnerControllerDelayState : IState
             case 1:
                 return SpawningObjectTypeEnum.LaserEnemySpawn;
             case 2:
-                return SpawningObjectTypeEnum.Gold;
+                return SpawningObjectTypeEnum.NotSpawn;
             case 3:
                 return SpawningObjectTypeEnum.Rocket;
             default:
@@ -213,106 +197,107 @@ public class SpawnerControllerDelayState : IState
     }
 
 }
-public class SpawnerControllerGoldSpawnState : IState
+public class SpawnerControllerGoldSpawnState : BaseTimeDependentState
 {
-    SpawnerController _spawnerController;
-    float _currentSpawnTime = 0;
-    public SpawnerControllerGoldSpawnState(SpawnerController spawnerController)
-    {
-        _spawnerController = spawnerController;
+    ISpawnerControllerGoldSpawnService _spawnerControllerGoldSpawnService;
 
+    public SpawnerControllerGoldSpawnState(ISpawnerControllerGoldSpawnService spawnerControllerGoldSpawnService)
+    {
+        _spawnerControllerGoldSpawnService = spawnerControllerGoldSpawnService;
     }
-    public void EnterState()
+    public override void EnterState()
     {
-
+        base.EnterState();
         for (int i = 0; i < 5; i++)
         {
-            _spawnerController.GoldSpawner.OneCoinSpawn();
-
+            _spawnerControllerGoldSpawnService.GoldSpawner.OneCoinSpawn();
         }
-
-        _currentSpawnTime = 0;
     }
 
-    public void ExitState()
+
+    protected override void Action()
     {
-
-
-
+        _spawnerControllerGoldSpawnService.SpawnerControllerChangeState(SpawningObjectTypeEnum.Delay);
     }
 
-    public void UpdateState()
+    protected override float MaxTime()
     {
-        _currentSpawnTime += Time.deltaTime;
-        if (_currentSpawnTime > 5)
-        {
-            _spawnerController.SpawnerControllerChangeState(SpawningObjectTypeEnum.Delay);
-
-        }
-        Debug.Log("Gold Update");
-
+        return 5;
     }
 }
 public class SpawnerControllerNotSpawnState : IState
 {
-    protected SpawnerController _enemyManager;
-    public SpawnerControllerNotSpawnState(SpawnerController enemyManager)
-    {
-        _enemyManager = enemyManager;
-    }
-    public void EnterState()
-    {
-
-    }
-
-    public void ExitState()
-    {
-
-    }
-
+    protected ISpawnerControllerChangeStateService _spawnerControllerChangeStateService;
+    public SpawnerControllerNotSpawnState(ISpawnerControllerChangeStateService spawnerControllerChangeStateService) => _spawnerControllerChangeStateService = spawnerControllerChangeStateService;
+    public void EnterState() { }
+    public void ExitState() { }
     public void UpdateState()
     {
-        Debug.Log("Not Spawn Update");
         if (GameManager.Instance.GameManagerState == GameManagerState.GameState)
         {
-            _enemyManager.SpawnerControllerChangeState(SpawningObjectTypeEnum.Delay);
+            _spawnerControllerChangeStateService.SpawnerControllerChangeState(SpawningObjectTypeEnum.Delay);
         }
     }
-
-
 }
 
-public class SpawnerControllerRocketSpawnState : IState
+public class SpawnerControllerRocketSpawnState : BaseTimeDependentState
 {
-    SpawnerController _spawnerControllerRocketSpawnService;
+    ISpawnerControllerRocketSpawnService _spawnerControllerRocketSpawnService;
 
-    float _timer = 0;
-    private bool _canSpawn = false;
-    public SpawnerControllerRocketSpawnState(SpawnerController spawnerControllerRocketSpawnService) => _spawnerControllerRocketSpawnService = spawnerControllerRocketSpawnService;
+    public SpawnerControllerRocketSpawnState(ISpawnerControllerRocketSpawnService spawnerControllerRocketSpawnService) => _spawnerControllerRocketSpawnService = spawnerControllerRocketSpawnService;
 
-    public void EnterState()
+    public override void EnterState()
     {
-        _timer = 0;
+        base.EnterState();
         _spawnerControllerRocketSpawnService.RocketSpawner.ChangeAlertVisibility(true);
     }
 
-    public void ExitState()
+    public override void ExitState()
     {
+        base.ExitState();
         _spawnerControllerRocketSpawnService.RocketSpawner.ChangeAlertVisibility(false);
-        _canSpawn = false;
         _spawnerControllerRocketSpawnService.RocketSpawner.AlertController.AlertVerticalMove.StopMove();
-
     }
 
-    public void UpdateState()
+    public override void UpdateState()
     {
+        base.UpdateState();
         _spawnerControllerRocketSpawnService.RocketSpawner.AlertController.AlertVerticalMove.PlayMove();
-        _timer += Time.deltaTime;
-        if (_timer > 3)
-        {
-            _spawnerControllerRocketSpawnService.RocketSpawner.Spawn();
-            _spawnerControllerRocketSpawnService.SpawnerControllerChangeState(SpawningObjectTypeEnum.Delay);
+    }
 
+    protected override void Action()
+    {
+        _spawnerControllerRocketSpawnService.RocketSpawner.Spawn();
+        _spawnerControllerRocketSpawnService.SpawnerControllerChangeState(SpawningObjectTypeEnum.Delay);
+    }
+
+    protected override float MaxTime()
+    {
+        return 3;
+    }
+}
+public abstract class BaseTimeDependentState : IState
+{
+    protected float _currentTime;
+
+    public virtual void EnterState()
+    {
+        _currentTime = 0;
+    }
+
+    public virtual void ExitState()
+    {
+        _currentTime = 0;
+    }
+
+    public virtual void UpdateState()
+    {
+        _currentTime += Time.deltaTime;
+        if (_currentTime > MaxTime())
+        {
+            Action();
         }
     }
+    protected abstract float MaxTime();
+    protected abstract void Action();
 }
