@@ -8,22 +8,41 @@ using UnityEngine;
 
 public enum SpawningObjectTypeEnum
 {
-    BarrierEnemySpawn, LaserEnemySpawn, Delay, Gold, NotSpawn
+    BarrierEnemySpawn, LaserEnemySpawn, Delay, Gold, NotSpawn, Rocket
 }
 
+public interface ISpawnerControllerRocketSpawnService
+{
+    RocketSpawner RocketSpawner { get; }
+    IStateMachine StateMachine { get; }
+
+}
+public interface ISpawnerController
+{
+    IStateMachine StateMachine { get; }
+    BarrierSpawner BarrierSpawner { get; }
+    LaserSpawner LaserSpawner { get; }
+    GoldSpawner GoldSpawner { get; }
+    RocketSpawner RocketSpawner { get; }
+}
 namespace Assembly_CSharp.Assets.GameFolders.Scripts.Managers.Concretes
 {
-    public class SpawnerController : MonoBehaviour
+    public class SpawnerController : MonoBehaviour, ISpawnerController, ISpawnerControllerRocketSpawnService
     {
         IStateMachine _stateMachine;
         SpawningObjectTypeEnum _spawningObjectTypeEnum;
         BarrierSpawner _barrierSpawner;
         LaserSpawner _laserSpawner;
         GoldSpawner _goldSpawner;
+        [SerializeField] RocketSpawner _rocketSpawner;
 
         public BarrierSpawner BarrierSpawner { get => _barrierSpawner; set => _barrierSpawner = value; }
         public LaserSpawner LaserSpawner { get => _laserSpawner; set => _laserSpawner = value; }
         public GoldSpawner GoldSpawner { get => _goldSpawner; set => _goldSpawner = value; }
+        public IStateMachine StateMachine => _stateMachine;
+        public RocketSpawner RocketSpawner => _rocketSpawner;
+
+
 
         private void Awake()
         {
@@ -39,6 +58,7 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.Managers.Concretes
             SpawnerControllerDelayState _spawnerControllerDelayState = new SpawnerControllerDelayState(this);
             SpawnerControllerGoldSpawnState _spawnerControllerGoldSpawnState = new SpawnerControllerGoldSpawnState(this);
             SpawnerControllerNotSpawnState _spawnerControllerNotSpawnState = new SpawnerControllerNotSpawnState(this);
+            SpawnerControllerRocketSpawnState _spawnerControllerRocketSpawnState = new SpawnerControllerRocketSpawnState(this);
 
             _stateMachine.SetState(_spawnerControllerDelayState);
 
@@ -53,6 +73,10 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.Managers.Concretes
 
             _stateMachine.SetAnyStateTransitions(_spawnerControllerNotSpawnState, () => GameManager.Instance.GameManagerState == GameManagerState.GameOverState);
             _stateMachine.SetNormalStateTransitions(_spawnerControllerNotSpawnState, _spawnerControllerDelayState, () => _spawningObjectTypeEnum == SpawningObjectTypeEnum.Delay);
+
+            _stateMachine.SetNormalStateTransitions(_spawnerControllerDelayState, _spawnerControllerRocketSpawnState, () => _spawningObjectTypeEnum == SpawningObjectTypeEnum.Rocket);
+            _stateMachine.SetNormalStateTransitions(_spawnerControllerRocketSpawnState, _spawnerControllerDelayState, () => _spawningObjectTypeEnum == SpawningObjectTypeEnum.Delay);
+
 
         }
         private void Update()
@@ -172,7 +196,7 @@ public class SpawnerControllerDelayState : IState
     }
     SpawningObjectTypeEnum enemySpawnType()
     {
-        int _randomIndex = UnityEngine.Random.Range(0, 4);
+        int _randomIndex = UnityEngine.Random.Range(0, 5);
         switch (_randomIndex)
         {
             case 0:
@@ -181,6 +205,8 @@ public class SpawnerControllerDelayState : IState
                 return SpawningObjectTypeEnum.LaserEnemySpawn;
             case 2:
                 return SpawningObjectTypeEnum.Gold;
+            case 3:
+                return SpawningObjectTypeEnum.Rocket;
             default:
                 return SpawningObjectTypeEnum.Delay;
         }
@@ -254,4 +280,39 @@ public class SpawnerControllerNotSpawnState : IState
     }
 
 
+}
+
+public class SpawnerControllerRocketSpawnState : IState
+{
+    SpawnerController _spawnerControllerRocketSpawnService;
+
+    float _timer = 0;
+    private bool _canSpawn = false;
+    public SpawnerControllerRocketSpawnState(SpawnerController spawnerControllerRocketSpawnService) => _spawnerControllerRocketSpawnService = spawnerControllerRocketSpawnService;
+
+    public void EnterState()
+    {
+        _timer = 0;
+        _spawnerControllerRocketSpawnService.RocketSpawner.ChangeAlertVisibility(true);
+    }
+
+    public void ExitState()
+    {
+        _spawnerControllerRocketSpawnService.RocketSpawner.ChangeAlertVisibility(false);
+        _canSpawn = false;
+        _spawnerControllerRocketSpawnService.RocketSpawner.AlertController.AlertVerticalMove.StopMove();
+
+    }
+
+    public void UpdateState()
+    {
+        _spawnerControllerRocketSpawnService.RocketSpawner.AlertController.AlertVerticalMove.PlayMove();
+        _timer += Time.deltaTime;
+        if (_timer > 3)
+        {
+            _spawnerControllerRocketSpawnService.RocketSpawner.Spawn();
+            _spawnerControllerRocketSpawnService.SpawnerControllerChangeState(SpawningObjectTypeEnum.Delay);
+
+        }
+    }
 }

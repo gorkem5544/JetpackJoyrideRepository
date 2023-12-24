@@ -31,7 +31,7 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.Controllers.Concretes.Other
         private void Start()
         {
         }
-        protected override void KillObject()
+        public override void KillObject()
         {
             GoldPool.Instance.Set(this);
             _currentTime = 0;
@@ -54,7 +54,7 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.Controllers.Concretes.Other
 
 }
 
-public class GoldHorizontalMovement : IBaseEntityHorizontalMovement
+public class GoldHorizontalMovement : IEntityHorizontalMove
 {
     IGoldController _goldController;
     public GoldHorizontalMovement(IGoldController goldController)

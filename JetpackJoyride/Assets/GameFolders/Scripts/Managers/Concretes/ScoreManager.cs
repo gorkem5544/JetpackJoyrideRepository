@@ -10,12 +10,15 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.Managers.Concretes
         private const string PLAYER_HIGH_SCORE_KEY = "HighScore";
         string _saveScore, _getScore;
 
+        public float CurrentScore { get; set; }
+
         /// <summary>
         /// Parametre olarak gelen "currentScore" değeri "GetScore()" float değeri döndüren methodundan yüksek ise 
         /// </summary>
         /// <param name="currentScore"></param>
         public void SaveScore(float currentScore)
         {
+            CurrentScore = currentScore;
             if (currentScore > GetScore())
             {
                 _saveScore = JsonConvert.SerializeObject(currentScore);

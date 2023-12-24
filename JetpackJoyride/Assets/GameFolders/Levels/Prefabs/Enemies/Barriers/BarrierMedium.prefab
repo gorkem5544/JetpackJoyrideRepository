@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3349854084107309410}
   - component: {fileID: 3349854084107309437}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: -4679065891160679786}
   - component: {fileID: -8137151231329215825}
   - component: {fileID: -7317431746040732479}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BarrierMedium
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -135,6 +135,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxLifeTime: 10
   _barrierTypeEnum: 1
+  _enemyBarrierSO: {fileID: 11400000, guid: 8b214e39708349742ab1d11cac99cc34, type: 2}
 --- !u!50 &-8137151231329215825
 Rigidbody2D:
   serializedVersion: 4
@@ -152,7 +153,7 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
@@ -192,7 +193,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3349854084874804312}
   - component: {fileID: 3349854084874804315}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Down
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -276,7 +277,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3349854085720053939}
   - component: {fileID: 3349854085720053938}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Center
   m_TagString: Untagged
   m_Icon: {fileID: 0}

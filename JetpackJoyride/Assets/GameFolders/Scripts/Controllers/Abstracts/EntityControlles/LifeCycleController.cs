@@ -15,19 +15,18 @@ public abstract class LifeCycleController : MonoBehaviour
             KillObject();
         }
     }
-    protected abstract void KillObject();
+    public abstract void KillObject();
 }
 public abstract class BaseEnemyController : LifeCycleController, IEnemyController
 {
     Rigidbody2D _rigidbody2D;
     public Rigidbody2D Rigidbody2D => _rigidbody2D;
-    protected BaseEnemyHorizontalMovement _baseEnemyHorizontalMovement;
     protected virtual void Awake()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
     }
 
-    protected override void KillObject()
+    public override void KillObject()
     {
         _currentTime = 0;
         DeadObject();

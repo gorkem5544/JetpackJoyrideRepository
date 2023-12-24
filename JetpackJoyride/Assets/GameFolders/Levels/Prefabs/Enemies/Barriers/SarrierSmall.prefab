@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: -6195808740370708234}
   - component: {fileID: -1825106629290126150}
   - component: {fileID: -5810269138997955435}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SarrierSmall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -51,6 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxLifeTime: 10
   _barrierTypeEnum: 0
+  _enemyBarrierSO: {fileID: 11400000, guid: 8b214e39708349742ab1d11cac99cc34, type: 2}
 --- !u!50 &-1825106629290126150
 Rigidbody2D:
   serializedVersion: 4
@@ -68,7 +69,7 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
@@ -108,7 +109,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4670807534219098918}
   - component: {fileID: 4670807534219098917}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -192,7 +193,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4670807535086258474}
   - component: {fileID: 4670807535086258473}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Center
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -276,7 +277,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4670807536041551851}
   - component: {fileID: 4670807536041551850}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Down
   m_TagString: Untagged
   m_Icon: {fileID: 0}

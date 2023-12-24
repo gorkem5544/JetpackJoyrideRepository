@@ -54,6 +54,7 @@
     "dotnet.defaultSolution": "JetpackJoyride.sln",
     "cSpell.words": [
         "Dont",
+        "Lerp",
         "Prefs",
         "UGUI"
     ]

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8088448182928768641}
   - component: {fileID: 8088448182928768640}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Center
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8088448183063192503}
   - component: {fileID: 8088448183063192502}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Down
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -178,7 +178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8088448183612445391}
   - component: {fileID: 8088448183612445390}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -264,7 +264,7 @@ GameObject:
   - component: {fileID: 8564243163604482766}
   - component: {fileID: -2186288649715913965}
   - component: {fileID: -595667402259696483}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BarrierLarge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -303,6 +303,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxLifeTime: 10
   _barrierTypeEnum: 2
+  _enemyBarrierSO: {fileID: 11400000, guid: 8b214e39708349742ab1d11cac99cc34, type: 2}
 --- !u!50 &-2186288649715913965
 Rigidbody2D:
   serializedVersion: 4
@@ -320,7 +321,7 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
