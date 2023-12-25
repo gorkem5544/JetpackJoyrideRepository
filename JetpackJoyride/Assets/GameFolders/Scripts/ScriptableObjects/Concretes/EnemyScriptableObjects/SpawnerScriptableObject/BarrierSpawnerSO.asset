@@ -20,5 +20,5 @@ MonoBehaviour:
   - {fileID: 5435121390585451433, guid: 5aa75bc691de9154d89424e3f8859443, type: 3}
   - {fileID: 8853207244168866928, guid: bc7e08ccf97004a479e7aecc9a2b3570, type: 3}
   - {fileID: 3989746958556481071, guid: 9aba103af92ec7149af239c8459c65aa, type: 3}
-  _maxSpawnTime: 2
-  _minSpawnTime: 3
+  _maxSpawnTime: 1.5
+  _minSpawnTime: 0.5

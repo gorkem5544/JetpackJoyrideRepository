@@ -1,4 +1,4 @@
-public interface IMoveSpeedSOService
+public interface IHorizontalMoveSpeed
 {
     float HorizontalMoveSpeed { get; }
 }

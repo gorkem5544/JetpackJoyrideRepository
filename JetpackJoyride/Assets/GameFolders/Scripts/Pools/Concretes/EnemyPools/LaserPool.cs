@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace Concretes.Pools
 {
-    public class LazerPool : GenericPool<LazerController>
+    public class LaserPool : GenericPool<LaserController>
     {
-        public static LazerPool Instance { get; private set; }
+        public static LaserPool Instance { get; private set; }
 
         public override void ResetAllObject()
         {
-            foreach (LazerController lazerController in GetComponentsInChildren<LazerController>())
+            foreach (LaserController laserController in GetComponentsInChildren<LaserController>())
             {
-                if (!lazerController.gameObject.activeSelf)
+                if (!laserController.gameObject.activeSelf)
                 {
                     return;
                 }
-                lazerController.DeadObject();
+                laserController.KillEnemyController();
             }
         }
 

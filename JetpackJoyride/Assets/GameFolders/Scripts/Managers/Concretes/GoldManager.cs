@@ -85,10 +85,7 @@ public class GoldManager : SingletonDontDestroyMonoObject<GoldManager>, IGoldMan
     }
     public int PlayerReSpawnCost()
     {
-        return 5 * PlayerManager.Instance.Player.PlayerHealth.HitCount;
+        return 5 * PlayerManager.Instance.CurrentInstantiatePlayer.PlayerHealth.HitCount;
     }
-    public void ResetGold()
-    {
 
-    }
 }

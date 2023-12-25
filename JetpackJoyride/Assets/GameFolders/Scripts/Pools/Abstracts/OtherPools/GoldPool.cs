@@ -17,7 +17,7 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.Pools.Abstracts.OtherPools
                 {
                     return;
                 }
-                child.Dead();
+                child.KillObject();
             }
 
         }

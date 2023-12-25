@@ -15,13 +15,14 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.UserInterfaces.Concretes.Ga
         protected override void OnEnable()
         {
             base.OnEnable();
-            _reSpawnConst = PlayerManager.Instance._instantiatePlayer.PlayerHealth.HitCount * 5;
+            _reSpawnConst = PlayerManager.Instance.CurrentInstantiatePlayer.PlayerHealth.HitCount * 5;
         }
         protected override void ButtonOnClick()
         {
-            PlayerManager.Instance._instantiatePlayer.PlayerHealth.PlayerReviveEvent?.Invoke();
+            PlayerManager.Instance.CurrentInstantiatePlayer.PlayerHealth.PlayerReviveEvent?.Invoke();
             GameManager.Instance.ChangeGameState(GameManagerState.GameState);
-            GoldManager.Instance.DecreaseGameInGoldAmount(_reSpawnConst);
+            Debug.Log(GoldManager.Instance.PlayerReSpawnCost());
+            GoldManager.Instance.DecreaseGameInGoldAmount(GoldManager.Instance.PlayerReSpawnCost());
         }
     }
 

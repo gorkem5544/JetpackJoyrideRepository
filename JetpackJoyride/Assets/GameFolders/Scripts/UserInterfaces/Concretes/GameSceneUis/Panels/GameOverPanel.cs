@@ -10,7 +10,7 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.UserInterfaces.Concretes.Ga
         [SerializeField] PlayerReSpawnButton _playerReSpawnButton;
         private void OnEnable()
         {
-            _playerReSpawnButton.gameObject.SetActive(PlayerManager.Instance._instantiatePlayer.GoldManger.GameInGoldAmount >= PlayerManager.Instance._instantiatePlayer.PlayerHealth.HitCount * 5);
+            _playerReSpawnButton.gameObject.SetActive(PlayerManager.Instance.CurrentInstantiatePlayer.GoldManger.GameInGoldAmount >= PlayerManager.Instance.CurrentInstantiatePlayer.PlayerHealth.HitCount * 5);
         }
     }
 }

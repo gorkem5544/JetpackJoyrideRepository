@@ -48,6 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxLifeTime: 10
+  _goldDetailScriptableObject: {fileID: 11400000, guid: 53d5f006c745d854f83db171980c1cd9, type: 2}
 --- !u!61 &5376279729383698403
 BoxCollider2D:
   m_ObjectHideFlags: 0

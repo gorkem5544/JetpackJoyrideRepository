@@ -57,6 +57,6 @@ public class AlertVerticalMoveWithLerp : IAlertVerticalMove
     }
     private float Lerp()
     {
-        return math.lerp(_alertController.transform.position.y, PlayerManager.Instance._instantiatePlayer.transform.position.y, 1f * Time.deltaTime);
+        return math.lerp(_alertController.transform.position.y, PlayerManager.Instance.CurrentInstantiatePlayer.transform.position.y, 1f * Time.deltaTime);
     }
 }

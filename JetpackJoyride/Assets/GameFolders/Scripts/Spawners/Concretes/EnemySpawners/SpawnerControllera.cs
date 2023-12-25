@@ -8,7 +8,7 @@ public class SpawnerControllera : MonoBehaviour
     [SerializeField] Transform[] _enemySpawnerPos;
     SelectNewEnemyType _newEnemy;
     private bool _canBarrier = true;
-    [SerializeField] LazerController _lazerController;
+    [SerializeField] LaserController _lazerController;
 
     [SerializeField] float _maxSpawnTime;
     [SerializeField] float _minSpawnTime;

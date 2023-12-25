@@ -1,0 +1,7 @@
+public interface IEnemyController : IEntityController
+{
+}
+
+
+
+

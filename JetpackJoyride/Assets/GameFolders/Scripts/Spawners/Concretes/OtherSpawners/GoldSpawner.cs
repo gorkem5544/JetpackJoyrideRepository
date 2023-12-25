@@ -6,42 +6,29 @@ using UnityEngine;
 
 public class GoldSpawner : MonoBehaviour
 {
-    [SerializeField] Transform _coinParent;
-    [SerializeField] Transform[] _singleCoinSpawnerTransforms;
-    [SerializeField] Transform[] _multipleCoinSpawnerTransforms;
-
+    Transform[] _spawnTransforms;
+    public GoldSpawner(Transform[] spawnTransforms)
+    {
+        _spawnTransforms = spawnTransforms;
+    }
     int count;
 
-    public void NormalCoinSpawn()
-    {
-        //_coinParent.transform.position = new Vector3(-10, _multipleCoinSpawnerTransforms[Random.Range(0, _multipleCoinSpawnerTransforms.Length)].transform.position.y);
-        for (int i = 0; i < 5; i++)
-        {
-            for (int j = 0; j < 7; j++)
-            {
-                GoldController newCoinController = GoldPool.Instance.Get();
-                newCoinController.transform.position = _coinParent.transform.position + new Vector3(_coinParent.transform.position.x * j * 1.6f, _coinParent.transform.position.y * i * 0.9f);
-                newCoinController.gameObject.SetActive(true);
-            }
-        }
-    }
     public void OneCoinSpawn()
     {
         GoldController newCoinController = GoldPool.Instance.Get();
-        newCoinController.transform.position = _singleCoinSpawnerTransforms[Random.Range(0, _singleCoinSpawnerTransforms.Length)].transform.position;
+        newCoinController.transform.position = _spawnTransforms[Random.Range(0, _spawnTransforms.Length)].transform.position;
         newCoinController.gameObject.SetActive(true);
     }
 
     public void SingleCoinSpawner()
     {
-        for (int i = 0; i < _singleCoinSpawnerTransforms.Length; i++)
+        for (int i = 0; i < _spawnTransforms.Length; i++)
         {
             for (int j = 0; j < 5; j++)
             {
                 count++;
                 GoldController newCoinController = GoldPool.Instance.Get();
-                newCoinController.transform.position = _singleCoinSpawnerTransforms[i].transform.position + new Vector3(_singleCoinSpawnerTransforms[i].transform.position.x + (j) + (count * 2), _singleCoinSpawnerTransforms[i].transform.position.y * 0.9f);
-              
+                newCoinController.transform.position = _spawnTransforms[i].transform.position + new Vector3(_spawnTransforms[i].transform.position.x + (j) + (count * 2), _spawnTransforms[i].transform.position.y * 0.9f);
                 newCoinController.gameObject.SetActive(true);
             }
         }

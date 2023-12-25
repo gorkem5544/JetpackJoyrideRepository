@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 637065927149122113}
   m_Layer: 0
   m_Name: '[GoldManager]'
-  m_TagString: Untagged
+  m_TagString: Manager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -44,4 +44,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd7b3a747218ec04492cc7f7195b34a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _goldDataSO: {fileID: 11400000, guid: e39e2cd3845e94b4dacde9558dc69585, type: 2}

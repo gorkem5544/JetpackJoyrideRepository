@@ -311,10 +311,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3178285, guid: 4e7ec64d67ef4c548a8e623d0255acaf, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3881907365701093259, guid: 4e7ec64d67ef4c548a8e623d0255acaf, type: 3}
       propertyPath: m_Name
       value: MenuCanvas
@@ -472,6 +468,10 @@ PrefabInstance:
     - target: {fileID: 2488393391400657641, guid: 830f1dbe71e54c94b8688bc76ba6a75f, type: 3}
       propertyPath: m_Name
       value: '[GameManager]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2488393391400657641, guid: 830f1dbe71e54c94b8688bc76ba6a75f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2488393391400657654, guid: 830f1dbe71e54c94b8688bc76ba6a75f, type: 3}
       propertyPath: m_RootOrder
@@ -644,6 +644,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: '[GoldManager]'
       objectReference: {fileID: 0}
+    - target: {fileID: 6421067727782014786, guid: 73f131e2eaa52c94baac466ea9c137af, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6421067727782014787, guid: 73f131e2eaa52c94baac466ea9c137af, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -754,6 +758,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8976618397382553485, guid: f70bb1474958d4545af340bb6c661fc2, type: 3}
+      propertyPath: _playerInstantiatePrefab
+      value: 
+      objectReference: {fileID: 2004740790, guid: c88331d323e89344e98cf7a53f685d6d, type: 3}
     - target: {fileID: 8976618397382553522, guid: f70bb1474958d4545af340bb6c661fc2, type: 3}
       propertyPath: m_RootOrder
       value: 6

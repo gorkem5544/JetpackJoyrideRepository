@@ -1,6 +1,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using Assembly_CSharp.Assets.GameFolders.Scripts.Combats.Concretes.PlayerCombats;
 using UnityEngine;
 
@@ -14,15 +15,15 @@ public abstract class BarrierGenericPool : SingletonDontDestroyMonoObject<Barrie
     private PlayerHealth _playerHealth;
     private void Start()
     {
-        _playerHealth = PlayerManager.Instance._instantiatePlayer.PlayerHealth;
+        _playerHealth = PlayerManager.Instance.CurrentInstantiatePlayer.PlayerHealth;
         GrowPool();
-        _playerHealth.PlayerHitEvent += ResetAllObject;
-        _playerHealth.PlayerReviveEvent += ResetAllObject;
+        _playerHealth.PlayerHitEvent += ResetAllBarrierObject;
+        _playerHealth.PlayerReviveEvent += ResetAllBarrierObject;
     }
     private void OnDisable()
     {
-        _playerHealth.PlayerHitEvent -= ResetAllObject;
-        _playerHealth.PlayerReviveEvent -= ResetAllObject;
+        _playerHealth.PlayerHitEvent -= ResetAllBarrierObject;
+        _playerHealth.PlayerReviveEvent -= ResetAllBarrierObject;
     }
     public BarrierController GetBarrierPool(BarrierTypeEnum barrierTypeEnum)
     {
@@ -64,8 +65,18 @@ public abstract class BarrierGenericPool : SingletonDontDestroyMonoObject<Barrie
         Queue<BarrierController> _blockQueueList = _barriersDictionaryList[BarrierController.BarrierTypeEnum];
         _blockQueueList.Enqueue(BarrierController);
     }
-    // protected abstract void KillAllObjet();
-
     public abstract void ResetAllObject();
+
+    public void ResetAllBarrierObject()
+    {
+        foreach (BaseEnemyController barrierChild in GetComponentsInChildren<BarrierController>())
+        {
+            if (!barrierChild.gameObject.activeSelf)
+            {
+                return;
+            }
+            barrierChild.KillEnemyController();
+        }
+    }
 
 }

@@ -7,11 +7,7 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.Managers.Concretes
 {
     public class LevelManager : SingletonDontDestroyMonoObject<LevelManager>
     {
-        protected override void Awake()
-        {
-            base.Awake();
 
-        }
         public void LoadLevelScene(string sceneName)
         {
             StartCoroutine(LoadSceneAsync(sceneName));

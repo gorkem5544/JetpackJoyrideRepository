@@ -47,6 +47,7 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.Managers.Concretes
         GoldSpawner _goldSpawner;
         [SerializeField] RocketSpawner _rocketSpawner;
         SpawningObjectTypeEnum _spawningObjectTypeEnum;
+        [SerializeField] Transform[] _spawnTransforms;
 
         public IStateMachine SpawnerControllerStateMachine => _spawnerControllerStateMachine;
         public BarrierSpawner BarrierSpawner => _barrierSpawner;
@@ -57,9 +58,9 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.Managers.Concretes
 
         private void Awake()
         {
-            _barrierSpawner = GameObject.FindWithTag("BarrierSpawner").transform.GetComponent<BarrierSpawner>();
-            _laserSpawner = GameObject.FindWithTag("LaserSpawner").transform.GetComponent<LaserSpawner>();
-            _goldSpawner = GameObject.FindWithTag("GoldSpawner").transform.GetComponent<GoldSpawner>();
+            _barrierSpawner = new BarrierSpawner(_spawnTransforms);
+            _laserSpawner = new LaserSpawner(_spawnTransforms);
+            _goldSpawner = new GoldSpawner(_spawnTransforms);
             _spawnerControllerStateMachine = new StateMachine();
         }
         private void Start()
@@ -82,7 +83,6 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.Managers.Concretes
             _spawnerControllerStateMachine.SetNormalStateTransitions(_spawnerControllerDelayState, _spawnerControllerGoldSpawnState, () => _spawningObjectTypeEnum == SpawningObjectTypeEnum.Gold);
             _spawnerControllerStateMachine.SetNormalStateTransitions(_spawnerControllerGoldSpawnState, _spawnerControllerDelayState, () => _spawningObjectTypeEnum == SpawningObjectTypeEnum.Delay);
 
-            _spawnerControllerStateMachine.SetAnyStateTransitions(_spawnerControllerNotSpawnState, () => GameManager.Instance.GameManagerState == GameManagerState.GameOverState);
             _spawnerControllerStateMachine.SetNormalStateTransitions(_spawnerControllerNotSpawnState, _spawnerControllerDelayState, () => _spawningObjectTypeEnum == SpawningObjectTypeEnum.Delay);
 
             _spawnerControllerStateMachine.SetNormalStateTransitions(_spawnerControllerDelayState, _spawnerControllerRocketSpawnState, () => _spawningObjectTypeEnum == SpawningObjectTypeEnum.Rocket);
@@ -133,7 +133,7 @@ class SpawnerControllerBarrierEnemySpawnState : BaseTimeDependentState
 
     protected override float MaxTime()
     {
-        return 5;
+        return 10;
     }
 }
 public class SpawnerControllerLaserEnemySpawnState : BaseTimeDependentState
@@ -147,11 +147,14 @@ public class SpawnerControllerLaserEnemySpawnState : BaseTimeDependentState
     public override void EnterState()
     {
         base.EnterState();
-        _spawnerControllerLaserSpawnService.LaserSpawner.Spawn();
+
+        _spawnerControllerLaserSpawnService.LaserSpawner.LaserSpawnAction();
     }
 
     protected override float MaxTime()
     {
+
+
         return 5;
     }
 
@@ -180,17 +183,23 @@ public class SpawnerControllerDelayState : BaseTimeDependentState
 
     SpawningObjectTypeEnum enemySpawnType()
     {
-        int _randomIndex = UnityEngine.Random.Range(0, 5);
+        int _randomIndex = UnityEngine.Random.Range(0, 7);
         switch (_randomIndex)
         {
             case 0:
                 return SpawningObjectTypeEnum.BarrierEnemySpawn;
             case 1:
-                return SpawningObjectTypeEnum.LaserEnemySpawn;
+                return SpawningObjectTypeEnum.BarrierEnemySpawn;
             case 2:
-                return SpawningObjectTypeEnum.NotSpawn;
+                return SpawningObjectTypeEnum.LaserEnemySpawn;
             case 3:
                 return SpawningObjectTypeEnum.Rocket;
+            case 4:
+                return SpawningObjectTypeEnum.Gold;
+            case 5:
+                return SpawningObjectTypeEnum.Gold;
+            case 6:
+                return SpawningObjectTypeEnum.Delay;
             default:
                 return SpawningObjectTypeEnum.Delay;
         }

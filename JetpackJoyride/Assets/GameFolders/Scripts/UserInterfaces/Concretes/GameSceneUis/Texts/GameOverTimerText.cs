@@ -16,7 +16,7 @@ public class GameOverTimerText : MonoBehaviour
     private void Update()
     {
         _maxTimer -= Time.deltaTime;
-        _textMeshProUGUI.text = _maxTimer.ToString();
+        _textMeshProUGUI.text = _maxTimer.ToString("0");
         if (_maxTimer <= 0)
         {
             LevelManager.Instance.LoadMenuScene("Menu");

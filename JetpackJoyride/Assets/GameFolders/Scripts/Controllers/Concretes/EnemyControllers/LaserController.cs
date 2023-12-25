@@ -9,7 +9,7 @@ public enum LaserStateEnum
 {
     Starting, Prepare, Launch
 }
-public class LazerController : BaseEnemyController
+public class LaserController : BaseEnemyController
 {
     LaserStateEnum _laserStateEnum = LaserStateEnum.Starting;
 
@@ -28,9 +28,8 @@ public class LazerController : BaseEnemyController
     public Transform DownTarget { get => _downTarget; set => _downTarget = value; }
     public Collider2D Collider2D { get => _collider2D; set => _collider2D = value; }
 
-    protected override void Awake()
+    private void Awake()
     {
-        base.Awake();
         _stateMachine = new StateMachine();
         Collider2D = GetComponent<Collider2D>();
     }
@@ -58,9 +57,9 @@ public class LazerController : BaseEnemyController
         _stateMachine.UpdateTick();
     }
 
-    public override void DeadObject()
+    public override void KillEnemyController()
     {
-        LazerPool.Instance.Set(this);
+        LaserPool.Instance.Set(this);
     }
     public void ChangeLaserState(LaserStateEnum laserStateEnum)
     {
@@ -69,8 +68,8 @@ public class LazerController : BaseEnemyController
 }
 public class LaserStartingState : IState
 {
-    LazerController _laserController;
-    public LaserStartingState(LazerController lazerController)
+    LaserController _laserController;
+    public LaserStartingState(LaserController lazerController)
     {
         _laserController = lazerController;
     }
@@ -102,18 +101,14 @@ public class LaserStartingState : IState
     {
         thisTransform.position = Vector3.MoveTowards(thisTransform.position, targetTransform.position, maxDistanceDelta);
     }
-    public Vector3 MoveActionReturnVector3(Transform current, Transform target, float maxDistanceDelta = 0.5f)
-    {
-        return Vector3.MoveTowards(current.position, target.position, maxDistanceDelta);
-    }
 
 
 }
 public class LaserPrepareState : IState
 {
-    LazerController _lazerController;
+    LaserController _lazerController;
     private float _currentTime;
-    public LaserPrepareState(LazerController lazerController)
+    public LaserPrepareState(LaserController lazerController)
     {
         _lazerController = lazerController;
     }
@@ -144,8 +139,8 @@ public class LaserPrepareState : IState
 }
 public class LaserActiveState : IState
 {
-    LazerController _lazerController;
-    public LaserActiveState(LazerController lazerController)
+    LaserController _lazerController;
+    public LaserActiveState(LaserController lazerController)
     {
         _lazerController = lazerController;
     }
@@ -156,6 +151,8 @@ public class LaserActiveState : IState
 
     public void ExitState()
     {
+        _lazerController.Center.gameObject.SetActive(false);
+
         _lazerController.Collider2D.enabled = false;
     }
 

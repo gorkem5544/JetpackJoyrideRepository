@@ -7,12 +7,9 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.UserInterfaces.Concretes.Me
     public class PlayerSelectButton : BaseButton
     {
         [SerializeField] public PlayerDetailSO _playerDetailSO;
-        private Image _selectionImage;
+        [SerializeField] Image _selectionImage;
         public System.Action<PlayerSelectButton> onClick;
-        private void Awake()
-        {
-            _selectionImage = GetComponent<Image>();
-        }
+
         protected override void ButtonOnClick()
         {
             onClick?.Invoke(this);

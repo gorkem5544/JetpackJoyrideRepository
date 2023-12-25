@@ -1,69 +1,47 @@
 using System.Collections;
 using System.Collections.Generic;
+using Assembly_CSharp.Assets.GameFolders.Scripts.Movements.Abstracts;
 using Assembly_CSharp.Assets.GameFolders.Scripts.Pools.Abstracts.OtherPools;
+using Assembly_CSharp.Assets.GameFolders.Scripts.ScriptableObjects.Concretes.OtherScriptableObjects.GoldScriptableObjects;
 using UnityEngine;
 public interface IGoldController : IEntityController
 {
-    Rigidbody2D Rigidbody2D { get; }
+
 }
 
 namespace Assembly_CSharp.Assets.GameFolders.Scripts.Controllers.Concretes.OtherControllers
 {
-    public class GoldController : LifeCycleController, IGoldController
+    public class GoldController : LifeCycleController, IGoldController, IGoldHorizontalMoveWithRigidBody2D
     {
-        Rigidbody2D _rigidbody2D;
+        IGoldHorizontalMove _goldHorizontalMove;
 
-        GoldHorizontalMovement _goldHorizontalMovement;
-        public Rigidbody2D Rigidbody2D { get => _rigidbody2D; set => _rigidbody2D = value; }
+        Rigidbody2D _rigidbody2D;
+        public Rigidbody2D Rigidbody2D => _rigidbody2D;
+
+        [SerializeField] GoldDetailScriptableObject _goldDetailScriptableObject;
+        public float HorizontalMoveSpeed => _goldDetailScriptableObject.HorizontalMoveSpeed;
+
         private void Awake()
         {
-
-
-
             _rigidbody2D = GetComponent<Rigidbody2D>();
-            _goldHorizontalMovement = new GoldHorizontalMovement(this);
+            _goldHorizontalMove = new GoldHorizontalMoveWithRigidBody2D(this);
         }
         private void OnEnable()
         {
-            _goldHorizontalMovement.MoveHorizontalWhenEnabled();
-
-        }
-        private void Start()
-        {
+            _goldHorizontalMove.HorizontalMoveTick();
         }
         public override void KillObject()
         {
             GoldPool.Instance.Set(this);
-            _currentTime = 0;
-        }
-        public void Dead()
-        {
-            KillObject();
         }
         private void OnTriggerEnter2D(Collider2D other)
         {
-
             if (other.TryGetComponent(out IPlayerController playerController))
             {
-                //playerController.GoldManger.IncreaseGoldAmount(1);
                 playerController.GoldManger.IncreaseGameInGoldAmount(1);
                 KillObject();
             }
         }
     }
-
 }
 
-public class GoldHorizontalMovement : IEntityHorizontalMove
-{
-    IGoldController _goldController;
-    public GoldHorizontalMovement(IGoldController goldController)
-    {
-        _goldController = goldController;
-    }
-    public virtual void MoveHorizontalWhenEnabled()
-    {
-        _goldController.Rigidbody2D.velocity = Vector2.left * 5f;
-    }
-
-}

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Assembly_CSharp.Assets.GameFolders.Scripts.Managers.Concretes;
@@ -9,18 +10,18 @@ public enum GameManagerState
 {
     MenuState, GameState, GameOverState
 }
+public interface IGameManager
+{
+    public GameManagerState GameManagerState { get; set; }
+    void ChangeGameState(GameManagerState gameManagerState);
+}
 
 namespace Assembly_CSharp.Assets.GameFolders.Scripts.Managers.Concretes
 {
-    public class GameManager : SingletonDontDestroyMonoObject<GameManager>
+    public class GameManager : SingletonDontDestroyMonoObject<GameManager>, IGameManager
     {
-
         GameManagerState _gameManagerState;
         IStateMachine _stateMachine;
-        [SerializeField] PlayerDetailSO playerDetailSO;
-        [SerializeField] PlayerController _playerController;
-
-        PlayerController playerController { get; set; }
         public GameManagerState GameManagerState { get => _gameManagerState; set => _gameManagerState = value; }
 
         protected override void Awake()
@@ -80,7 +81,7 @@ public class GameState : IState
 {
     public void EnterState()
     {
-        PlayerManager.Instance._instantiatePlayer.Rigidbody2D.constraints = RigidbodyConstraints2D.None;
+        PlayerManager.Instance.CurrentInstantiatePlayer.Rigidbody2D.constraints = RigidbodyConstraints2D.None;
     }
 
     public void ExitState()
@@ -106,7 +107,7 @@ public class GameOverState : IState
     public void EnterState()
     {
         _timer = 0;
-        PlayerManager.Instance._instantiatePlayer.Rigidbody2D.constraints = RigidbodyConstraints2D.FreezeAll;
+        PlayerManager.Instance.CurrentInstantiatePlayer.Rigidbody2D.constraints = RigidbodyConstraints2D.FreezeAll;
     }
 
     public void ExitState()

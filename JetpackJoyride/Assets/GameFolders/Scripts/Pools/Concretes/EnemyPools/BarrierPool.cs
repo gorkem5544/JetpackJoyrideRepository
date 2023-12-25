@@ -12,19 +12,8 @@ public class BarrierPool : BarrierGenericPool
             {
                 return;
             }
-            child.DeadObject();
+            child.KillEnemyController();
         }
     }
-
-    // protected override void KillAllObjet()
-    // {
-    //     foreach (BaseEnemyController child in GetComponentsInChildren<BarrierController>())
-    //     {
-    //         if (!child.gameObject.activeSelf)
-    //         {
-    //             return;
-    //         }
-    //         child.DeadObject();
-    //     }
-    // }
+    
 }

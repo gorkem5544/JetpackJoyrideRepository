@@ -22,7 +22,7 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.Combats.Concretes.PlayerCom
             {
                 HitCount++;
                 PlayerHitEvent?.Invoke();
-                GameManager.Instance.ChangeGameState(GameManagerState.GameOverState);
+                 GameManager.Instance.ChangeGameState(GameManagerState.GameOverState);
             }
         }
     }
