@@ -24,7 +24,7 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.Managers.Concretes
             //
 
             yield return SceneManager.LoadSceneAsync(sceneName);
-            GameManager.Instance.ChangeGameState(GameManagerState.GameState);
+            GameManager.Instance.ChangeGameState(GameManagerStateEnum.GameState);
             PlayerManager.Instance.InstantiatePlayer();
 
         }
@@ -47,7 +47,7 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.Managers.Concretes
 
             yield return SceneManager.LoadSceneAsync(sceneName);
             GoldManager.Instance.PlayerPrefsGetScore();
-            GameManager.Instance.ChangeGameState(GameManagerState.MenuState);
+            GameManager.Instance.ChangeGameState(GameManagerStateEnum.MenuState);
 
         }
     }

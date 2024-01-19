@@ -23,7 +23,7 @@ public abstract class GenericPool<T> : MonoBehaviour, IResetPool where T : Compo
 
     private void Start()
     {
-         if (GameManager.Instance.GameManagerState == GameManagerState.GameState)
+         if (GameManager.Instance.GameManagerState == GameManagerStateEnum.GameState)
          {
              _playerHealth = PlayerManager.Instance.CurrentInstantiatePlayer.PlayerHealth;
              _playerHealth.PlayerHitEvent += ResetAllObject;

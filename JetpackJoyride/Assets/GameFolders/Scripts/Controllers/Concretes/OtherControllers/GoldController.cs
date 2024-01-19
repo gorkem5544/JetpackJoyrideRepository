@@ -4,10 +4,6 @@ using Assembly_CSharp.Assets.GameFolders.Scripts.Movements.Abstracts;
 using Assembly_CSharp.Assets.GameFolders.Scripts.Pools.Abstracts.OtherPools;
 using Assembly_CSharp.Assets.GameFolders.Scripts.ScriptableObjects.Concretes.OtherScriptableObjects.GoldScriptableObjects;
 using UnityEngine;
-public interface IGoldController : IEntityController
-{
-
-}
 
 namespace Assembly_CSharp.Assets.GameFolders.Scripts.Controllers.Concretes.OtherControllers
 {

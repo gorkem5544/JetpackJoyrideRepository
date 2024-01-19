@@ -13,7 +13,7 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.UserInterfaces.Concretes.Ga
 
         private void Update()
         {
-             if (GameManager.Instance.GameManagerState == GameManagerState.GameState)
+             if (GameManager.Instance.GameManagerState == GameManagerStateEnum.GameState)
              {
                  _currentScore += Time.deltaTime * IncreaseMultipleFactor();
                  _scoreText.text = "SCORE: " + _currentScore.ToString("0");

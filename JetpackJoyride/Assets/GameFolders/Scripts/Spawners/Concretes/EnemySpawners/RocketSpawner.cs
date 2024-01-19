@@ -11,6 +11,10 @@ public class RocketSpawner : MonoBehaviour
     public RocketController RocketController { get => newRocketController; set => newRocketController = value; }
     public AlertController AlertController { get => _alertController; set => _alertController = value; }
 
+    private void Start()
+    {
+        ChangeAlertVisibility(false);
+    }
     RocketController newRocketController;
     public void ChangeAlertVisibility(bool canActive)
     {
