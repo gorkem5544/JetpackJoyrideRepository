@@ -9,7 +9,7 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.Managers.Concretes
 {
     public class SpawnerController : MonoBehaviour, ISpawnerControllerBarrierSpawnService, ISpawnerControllerLaserSpawnService, ISpawnerControllerRocketSpawnService, ISpawnerControllerGoldSpawnService
     {
-        IStateMachine _spawnerControllerStateMachine;
+        StateMachine _spawnerControllerStateMachine;
         BarrierSpawner _barrierSpawner;
         LaserSpawner _laserSpawner;
         GoldSpawner _goldSpawner;
@@ -17,12 +17,13 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.Managers.Concretes
         SpawningObjectTypeEnum _spawningObjectTypeEnum;
         [SerializeField] Transform[] _spawnTransforms;
 
-        public IStateMachine SpawnerControllerStateMachine => _spawnerControllerStateMachine;
+        public StateMachine SpawnerControllerStateMachine => _spawnerControllerStateMachine;
         public BarrierSpawner BarrierSpawner => _barrierSpawner;
         public LaserSpawner LaserSpawner => _laserSpawner;
         public GoldSpawner GoldSpawner => _goldSpawner;
         public RocketSpawner RocketSpawner => _rocketSpawner;
 
+        IStateMachine ISpawnerControllerStateMachineService.SpawnerControllerStateMachine => throw new NotImplementedException();
 
         private void Awake()
         {
@@ -60,7 +61,7 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.Managers.Concretes
         }
         private void Update()
         {
-            _spawnerControllerStateMachine.UpdateTick();
+            _spawnerControllerStateMachine.Update();
 
         }
         public void SpawnerControllerChangeState(SpawningObjectTypeEnum enemySpawnType) => _spawningObjectTypeEnum = enemySpawnType;

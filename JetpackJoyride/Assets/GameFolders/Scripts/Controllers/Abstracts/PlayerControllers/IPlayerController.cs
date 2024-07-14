@@ -7,8 +7,8 @@ public interface IPlayerController : IEntityController
     Rigidbody2D Rigidbody2D { get; }
     InputReader InputReader { get; }
     PlayerSO PlayerSO { get; }
-    IGoldManger GoldManger { get; }
+    IGoldManager GoldManger { get; }
     PlayerHealth PlayerHealth { get; }
+
+
 }
-
-

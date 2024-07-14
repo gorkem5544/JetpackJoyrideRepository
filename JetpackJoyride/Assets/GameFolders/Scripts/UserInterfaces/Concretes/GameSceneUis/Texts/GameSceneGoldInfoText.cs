@@ -9,10 +9,13 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.UserInterfaces.Concretes.Ga
     public class GameSceneGoldInfoText : MonoBehaviour
     {
         [SerializeField] TextMeshProUGUI _coinText;
-        private IGoldManger _playerGoldManager;
+        private IGoldManager _playerGoldManager;
+        public void Initialize(IPlayerController playerController)
+        {
+            _playerGoldManager = playerController.GoldManger;
+        }
         private void Start()
         {
-            _playerGoldManager = PlayerManager.Instance.CurrentInstantiatePlayer.GoldManger;
             _playerGoldManager.GoldChangedEvent += HandleOnCoinChanged;
         }
 

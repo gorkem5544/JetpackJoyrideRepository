@@ -14,7 +14,7 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.UserInterfaces.Concretes.Ga
         {
             PlayerManager.Instance.CurrentInstantiatePlayer.PlayerHealth.PlayerReviveEvent?.Invoke();
             GameManager.Instance.ChangeGameState(GameManagerStateEnum.GameState);
-            GoldManager.Instance.DecreaseGameInGoldAmount(GoldManager.Instance.PlayerReSpawnCost());
+            //GoldManager.Instance.DecreaseGameInGoldAmount(GoldManager.Instance.PlayerReSpawnCost());
         }
     }
 }

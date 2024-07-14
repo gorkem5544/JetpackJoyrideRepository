@@ -10,13 +10,16 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.UserInterfaces.Concretes.Ga
     {
         [SerializeField] GameObject _gameOverPanel;
         private PlayerHealth _playerHealth;
+
         private void Start()
         {
-            _playerHealth = PlayerManager.Instance.CurrentInstantiatePlayer.PlayerHealth;
             ChangeGameOverPanelActive(false);
-
             _playerHealth.PlayerHitEvent += HandleOnTakeHit;
             _playerHealth.PlayerReviveEvent += HandleOnReSpawn;
+        }
+        public void Initialize(IPlayerController playerController)
+        {
+            _playerHealth = playerController.PlayerHealth;
         }
 
         private void OnDisable()

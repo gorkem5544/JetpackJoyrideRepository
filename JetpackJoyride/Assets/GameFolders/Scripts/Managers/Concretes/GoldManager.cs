@@ -3,7 +3,7 @@ using System.IO;
 using Newtonsoft.Json;
 using Unity.VisualScripting;
 using UnityEngine;
-public interface IGoldManger
+public interface IGoldManager
 {
     int PlayerReSpawnCost();
     void PlayerPrefsGetScore();
@@ -15,77 +15,120 @@ public interface IGoldManger
     int SumGameAndMenuScore();
 }
 
-public class GoldManager : SingletonDontDestroyMonoObject<GoldManager>, IGoldManger
+public class GoldManager : IGoldManager
 {
 
     const string PLAYER_DATA_JSON_KEY = "PlayerDataJson";
     public Action<int> GoldChangedEvent { get; set; }
 
-
-    GoldDataSO _goldDataSO;
-
-    private int _currentGold;
-    public int CurrentGold => _currentGold;
-    public GoldDataSO GoldDataSO { get => _goldDataSO; set => _goldDataSO = value; }
-
-
+    private GoldDataSO _goldDataSO;
     private int _gameInGoldAmount;
-    public int GameInGoldAmount { get => _gameInGoldAmount; set => _gameInGoldAmount = value; }
 
-    string jsonValue;
-    private void Start()
+    public GoldManager()
     {
-
-        PlayerPrefsGetScore();
-
+        LoadGoldData();
     }
 
-    public void PlayerPrefsGetScore()
+    public int CurrentGold => _goldDataSO?.GoldAmount ?? 0;
+    public GoldDataSO GoldDataSO => _goldDataSO;
+
+    public int GameInGoldAmount
     {
-        if (PlayerPrefs.HasKey(PLAYER_DATA_JSON_KEY))
+        get => _gameInGoldAmount;
+        set
         {
-            jsonValue = PlayerPrefs.GetString(PLAYER_DATA_JSON_KEY);
-            _goldDataSO = JsonConvert.DeserializeObject<GoldDataSO>(jsonValue);
-            Debug.Log(_goldDataSO.GoldAmount);
-        }
-        else
-        {
-            _goldDataSO = new GoldDataSO();
-            _goldDataSO.GoldAmount = 0;
+            _gameInGoldAmount = value;
+            SaveGoldData();
+            GoldChangedEvent?.Invoke(_gameInGoldAmount);
         }
     }
 
+    public void LoadGoldData()
+    {
+        _goldDataSO = JsonHelper.Load<GoldDataSO>(PLAYER_DATA_JSON_KEY) ?? new GoldDataSO { GoldAmount = 0 };
+    }
 
     public void IncreaseGameInGoldAmount(int amount)
     {
         _gameInGoldAmount += amount;
         _goldDataSO.GoldAmount += amount;
-        GoldChangedEventMethod();
-        SaveScore();
+        SaveGoldData();
+        GoldChangedEvent?.Invoke(_goldDataSO.GoldAmount);
     }
+
     public void DecreaseGameInGoldAmount(int amount)
     {
         _gameInGoldAmount -= amount;
         _goldDataSO.GoldAmount -= amount;
-        GoldChangedEventMethod();
-        SaveScore();
+        SaveGoldData();
+        GoldChangedEvent?.Invoke(_goldDataSO.GoldAmount);
     }
-    private void SaveScore()
+
+    public void SaveGoldData()
     {
-        string value = JsonConvert.SerializeObject(_goldDataSO);
-        PlayerPrefs.SetString(PLAYER_DATA_JSON_KEY, value);
-    }
-    private void GoldChangedEventMethod()
-    {
-        GoldChangedEvent.Invoke(_gameInGoldAmount);
-    }
-    public int SumGameAndMenuScore()
-    {
-        return _currentGold + _gameInGoldAmount;
+        JsonHelper.Save(PLAYER_DATA_JSON_KEY, _goldDataSO);
     }
     public int PlayerReSpawnCost()
     {
-        return 5 * PlayerManager.Instance.CurrentInstantiatePlayer.PlayerHealth.HitCount;
+        throw new NotImplementedException();
     }
 
+    public void PlayerPrefsGetScore()
+    {
+        throw new NotImplementedException();
+    }
+
+    public int SumGameAndMenuScore()
+    {
+        throw new NotImplementedException();
+    }
+}
+
+
+public static class JsonHelper
+{
+    public static void Save<T>(string key, T data)
+    {
+        try
+        {
+            string json = JsonConvert.SerializeObject(data);
+            PlayerPrefs.SetString(key, json);
+            PlayerPrefs.Save();
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"Failed to save data to PlayerPrefs: {e}");
+        }
+    }
+
+    public static T Load<T>(string key)
+    {
+        if (PlayerPrefs.HasKey(key))
+        {
+            try
+            {
+                string json = PlayerPrefs.GetString(key);
+                return JsonConvert.DeserializeObject<T>(json);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"Failed to load data from PlayerPrefs: {e}");
+                return default;
+            }
+        }
+        return default;
+    }
+
+    public static bool HasKey(string key)
+    {
+        return PlayerPrefs.HasKey(key);
+    }
+
+    public static void DeleteKey(string key)
+    {
+        if (PlayerPrefs.HasKey(key))
+        {
+            PlayerPrefs.DeleteKey(key);
+        }
+    }
 }

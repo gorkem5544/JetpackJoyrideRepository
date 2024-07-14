@@ -10,7 +10,7 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.Managers.Concretes
     public class GameManager : SingletonDontDestroyMonoObject<GameManager>, IGameManager
     {
         GameManagerStateEnum _gameManagerState;
-        IStateMachine _stateMachine;
+        StateMachine _stateMachine;
         public GameManagerStateEnum GameManagerState { get => _gameManagerState; set => _gameManagerState = value; }
 
         protected override void Awake()
@@ -37,7 +37,7 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.Managers.Concretes
         }
         private void Update()
         {
-            _stateMachine.UpdateTick();
+            _stateMachine.Update();
         }
         public void ChangeGameState(GameManagerStateEnum gameManagerState)
         {

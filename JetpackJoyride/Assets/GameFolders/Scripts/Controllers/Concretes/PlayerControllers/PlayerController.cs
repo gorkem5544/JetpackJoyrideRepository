@@ -17,14 +17,14 @@ public class PlayerController : MonoBehaviour, IPlayerController
     public PlayerSO PlayerSO => _playerSO;
 
     GoldManager _goldManger;
-    public IGoldManger GoldManger => _goldManger;
+    public IGoldManager GoldManger => _goldManger;
 
     public PlayerHealth PlayerHealth => _playerHealth;
     IPlayerMovement _playerAddForceMovement;
 
     private void Awake()
     {
-        _goldManger = GoldManager.Instance;
+        _goldManger = new GoldManager();
         _playerHealth = GetComponent<PlayerHealth>();
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _playerAddForceMovement = new PlayerRigidBodyAddForceMovement(this);
@@ -38,10 +38,15 @@ public class PlayerController : MonoBehaviour, IPlayerController
     private void Start()
     {
         _goldManger.PlayerPrefsGetScore();
+        _goldManger.IncreaseGameInGoldAmount(123123);
     }
     private void Update()
     {
         _playerAddForceMovement.ForceUpMovementUpdateTick();
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            _goldManger.IncreaseGameInGoldAmount(1000);
+        }
     }
     private void FixedUpdate()
     {

@@ -7,6 +7,11 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.Managers.Concretes
 {
     public class LevelManager : SingletonDontDestroyMonoObject<LevelManager>
     {
+        PlayerManager playerManager;
+        public void Initialize(PlayerManager manager)
+        {
+            playerManager = manager;
+        }
 
         public void LoadLevelScene(string sceneName)
         {
@@ -25,7 +30,8 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.Managers.Concretes
 
             yield return SceneManager.LoadSceneAsync(sceneName);
             GameManager.Instance.ChangeGameState(GameManagerStateEnum.GameState);
-            PlayerManager.Instance.InstantiatePlayer();
+            // PlayerManager.Instance.InstantiatePlayer();
+            //playerManager.InstantiatePlayer();
 
         }
         public void LoadMenuScene(string sceneName)
@@ -46,7 +52,7 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.Managers.Concretes
             // }
 
             yield return SceneManager.LoadSceneAsync(sceneName);
-            GoldManager.Instance.PlayerPrefsGetScore();
+            // GoldManager.Instance.PlayerPrefsGetScore();
             GameManager.Instance.ChangeGameState(GameManagerStateEnum.MenuState);
 
         }

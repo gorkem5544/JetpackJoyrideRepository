@@ -13,7 +13,7 @@ public class LaserController : BaseEnemyController, ILaserController
     Collider2D _collider2D;
     private Transform _topObjectStartingTransform, _downObjectStartingTransform;
 
-    IStateMachine _stateMachine;
+    StateMachine _stateMachine;
 
     public GameObject Top { get => _top; set => _top = value; }
     public GameObject Down { get => _down; set => _down = value; }
@@ -50,7 +50,7 @@ public class LaserController : BaseEnemyController, ILaserController
     public override void Update()
     {
         base.Update();
-        _stateMachine.UpdateTick();
+        _stateMachine.Update();
     }
 
     public override void KillEnemyController()

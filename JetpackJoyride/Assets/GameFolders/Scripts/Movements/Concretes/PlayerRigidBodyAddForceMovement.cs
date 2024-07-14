@@ -17,4 +17,3 @@ public class PlayerRigidBodyAddForceMovement : BasePlayerMovement
 
 }
 
-

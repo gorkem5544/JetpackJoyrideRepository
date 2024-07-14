@@ -4,8 +4,8 @@ public class GameManagerMenuState : IState
 {
     public void EnterState()
     {
-        GoldManager.Instance.PlayerPrefsGetScore();
-        GoldManager.Instance.SumGameAndMenuScore();
+        //GoldManager.Instance.PlayerPrefsGetScore();
+        //GoldManager.Instance.SumGameAndMenuScore();
     }
 
     public void ExitState()
