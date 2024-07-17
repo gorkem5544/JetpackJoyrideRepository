@@ -10,11 +10,11 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.UserInterfaces.Concretes.Me
         [SerializeField] public PlayerDetailSO _playerDetailSO;
         [SerializeField] Image _selectionImage;
         public System.Action<PlayerSelectButton> onClick;
-        private PlayerManager playerManager;
 
-        public void Initialize(PlayerManager manager)
+
+        public void Initialize()
         {
-            playerManager = manager;
+
         }
         protected override void ButtonOnClick()
         {

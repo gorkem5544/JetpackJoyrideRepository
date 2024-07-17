@@ -5,35 +5,52 @@ using UnityEngine.SceneManagement;
 
 namespace Assembly_CSharp.Assets.GameFolders.Scripts.Managers.Concretes
 {
-    public class LevelManager : SingletonDontDestroyMonoObject<LevelManager>
+    public class LevelManager : MonoBehaviour
     {
-        PlayerManager playerManager;
-        public void Initialize(PlayerManager manager)
-        {
-            playerManager = manager;
-        }
+        public static event System.Action<string> OnLevelLoaded;
+        public static event System.Action<string> OnLevelUnloaded;
+        public static event System.Action<string> OnLevelLoadingStarted;
 
-        public void LoadLevelScene(string sceneName)
+        public void LoadLevel(string sceneName)
         {
             StartCoroutine(LoadSceneAsync(sceneName));
         }
-        public IEnumerator LoadSceneAsync(string sceneName)
+
+        public void UnloadLevel(string sceneName)
         {
-            //syncOperation asyncOperation = SceneManager.LoadSceneAsync(sceneName);
-            //hile (asyncOperation.progress < 1)
-            //
-            //   PlayerManager.Instance.InstantiatePlayer();
-            //   //PlayerManager.Instance.GetReferancePlayer();
-            //   yield return new WaitForEndOfFrame();
-
-            //
-
-            yield return SceneManager.LoadSceneAsync(sceneName);
-            GameManager.Instance.ChangeGameState(GameManagerStateEnum.GameState);
-            // PlayerManager.Instance.InstantiatePlayer();
-            //playerManager.InstantiatePlayer();
-
+            StartCoroutine(UnloadSceneAsync(sceneName));
         }
+
+        private IEnumerator LoadSceneAsync(string sceneName)
+        {
+            OnLevelLoadingStarted?.Invoke(sceneName);
+
+            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
+
+            while (!asyncLoad.isDone)
+            {
+                yield return null;
+            }
+
+            OnLevelLoaded?.Invoke(sceneName);
+            GameManager.Instance.ChangeGameState(GameManagerStateEnum.GameState);
+        }
+
+        private IEnumerator UnloadSceneAsync(string sceneName)
+        {
+            AsyncOperation asyncUnload = SceneManager.UnloadSceneAsync(sceneName);
+
+            while (asyncUnload != null && !asyncUnload.isDone)
+            {
+                yield return null;
+            }
+            {
+                yield return null;
+            }
+
+            OnLevelUnloaded?.Invoke(sceneName);
+        }
+
         public void LoadMenuScene(string sceneName)
         {
             StartCoroutine(LoadMenuAsync(sceneName));

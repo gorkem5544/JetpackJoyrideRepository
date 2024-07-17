@@ -13,9 +13,14 @@ public abstract class BarrierGenericPool : SingletonDontDestroyMonoObject<Barrie
     Dictionary<BarrierTypeEnum, Queue<BarrierController>> _barriersDictionaryList = new Dictionary<BarrierTypeEnum, Queue<BarrierController>>();
 
     private PlayerHealth _playerHealth;
+
+    public void Installer(IPlayerController playerController)
+    {
+        _playerHealth = playerController.PlayerHealth;
+    }
     private void Start()
     {
-        _playerHealth = PlayerManager.Instance.CurrentInstantiatePlayer.PlayerHealth;
+        //        _playerHealth = PlayerManager.Instance.CurrentInstantiatePlayer.PlayerHealth;
         GrowPool();
         _playerHealth.PlayerHitEvent += ResetAllBarrierObject;
         _playerHealth.PlayerReviveEvent += ResetAllBarrierObject;

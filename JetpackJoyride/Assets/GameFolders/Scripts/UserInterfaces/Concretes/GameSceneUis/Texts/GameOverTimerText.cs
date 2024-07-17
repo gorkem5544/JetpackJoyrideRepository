@@ -19,7 +19,7 @@ public class GameOverTimerText : MonoBehaviour
         _textMeshProUGUI.text = _maxTimer.ToString("0");
         if (_maxTimer <= 0)
         {
-            LevelManager.Instance.LoadMenuScene("Menu");
+            //LevelManager.Instance.LoadMenuScene("Menu");
         }
     }
     private void OnDisable()

@@ -7,9 +7,21 @@ public class AlertController : MonoBehaviour, IAlertController
 
     public IAlertVerticalMove AlertVerticalMove => _alertVerticalMove;
 
+    IPlayerController _playerController;
+    public IPlayerController PlayerController => _playerController;
+
+
+    IAlertVerticalMoveService _alertVerticalMoveService;
+
     private void Awake()
     {
-        _alertVerticalMove = new AlertVerticalMoveWithLerp(this);
+        _alertVerticalMoveService = new AlertVerticalMoveService(this);
+        _alertVerticalMove = new AlertVerticalMoveWithLerp(_alertVerticalMoveService);
+    }
+
+    public void Installer(IPlayerController playerController)
+    {
+        _playerController = playerController;
     }
 
 }

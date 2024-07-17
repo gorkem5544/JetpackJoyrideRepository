@@ -1,8 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using Assembly_CSharp.Assets.GameFolders.Scripts.Managers.Concretes;
+using Assembly_CSharp.Assets.GameFolders.Scripts.Pools.Abstracts.OtherPools;
+using Assembly_CSharp.Assets.GameFolders.Scripts.Pools.Concretes.EnemyPools;
 using Assembly_CSharp.Assets.GameFolders.Scripts.UserInterfaces.Concretes.GameScneUis.Objects;
 using Assembly_CSharp.Assets.GameFolders.Scripts.UserInterfaces.Concretes.GameScneUis.Panels;
 using Assembly_CSharp.Assets.GameFolders.Scripts.UserInterfaces.Concretes.GameScneUis.Texts;
+using Concretes.Pools;
 using Newtonsoft.Json;
 using UnityEngine;
 
@@ -16,13 +20,28 @@ public class Gameİnitializer : MonoBehaviour
     [SerializeField] private GameOverPanel _gameOverPanel;
     [SerializeField] private GameOverObject _gameOverObject;
     [SerializeField] private GameSceneGoldInfoText _gameSceneGoldInfoText;
+
+
+    [SerializeField] private BarrierGenericPool _barrierGenericPool;
+    [SerializeField] private GoldPool _goldPool;
+    [SerializeField] private LaserPool _laserPool;
+    [SerializeField] private RocketPool _rocketPool;
+
+    [SerializeField] private ReturnMenuButtonInGame _returnMenuButton;
+    [SerializeField] private LevelManager _levelManager;
+
     private void Awake()
     {
         LoadPlayerDetails();
-
+        _barrierGenericPool.Installer(_currentInstantiatePlayer);
         _gameOverObject.Initialize(_currentInstantiatePlayer);
         _gameOverPanel.Initialize(_currentInstantiatePlayer);
         _gameSceneGoldInfoText.Initialize(_currentInstantiatePlayer);
+        _returnMenuButton.Installer(_levelManager);
+
+        _goldPool.Installer(_currentInstantiatePlayer);
+        _laserPool.Installer(_currentInstantiatePlayer);
+        _rocketPool.Installer(_currentInstantiatePlayer);
     }
 
     private void LoadPlayerDetails()

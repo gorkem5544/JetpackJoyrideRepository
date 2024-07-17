@@ -35,11 +35,6 @@ public class PlayerController : MonoBehaviour, IPlayerController
         _playerHealth = GetComponent<PlayerHealth>();
 
     }
-    private void Start()
-    {
-        _goldManger.PlayerPrefsGetScore();
-        _goldManger.IncreaseGameInGoldAmount(123123);
-    }
     private void Update()
     {
         _playerAddForceMovement.ForceUpMovementUpdateTick();

@@ -16,19 +16,26 @@ public abstract class GenericPool<T> : MonoBehaviour, IResetPool where T : Compo
     Queue<T> _poolPrefabs = new Queue<T>();
     private PlayerHealth _playerHealth;
 
+    public void Installer(IPlayerController playerController)
+    {
+        _playerHealth = playerController.PlayerHealth;
+    }
+
     private void Awake()
     {
         Singleton();
     }
 
+
+
     private void Start()
     {
-         if (GameManager.Instance.GameManagerState == GameManagerStateEnum.GameState)
-         {
-             _playerHealth = PlayerManager.Instance.CurrentInstantiatePlayer.PlayerHealth;
-             _playerHealth.PlayerHitEvent += ResetAllObject;
-             _playerHealth.PlayerReviveEvent += ResetAllObject;
-         }
+        if (GameManager.Instance.GameManagerState == GameManagerStateEnum.GameState)
+        {
+            //_playerHealth = PlayerManager.Instance.CurrentInstantiatePlayer.PlayerHealth;
+            _playerHealth.PlayerHitEvent += ResetAllObject;
+            _playerHealth.PlayerReviveEvent += ResetAllObject;
+        }
     }
     private void OnDisable()
     {

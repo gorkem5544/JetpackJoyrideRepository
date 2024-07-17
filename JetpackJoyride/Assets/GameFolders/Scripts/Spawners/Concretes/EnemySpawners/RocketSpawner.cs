@@ -10,21 +10,16 @@ public class RocketSpawner : MonoBehaviour
     [SerializeField] RocketController _rocketController;
     public RocketController RocketController { get => newRocketController; set => newRocketController = value; }
     public AlertController AlertController { get => _alertController; set => _alertController = value; }
+    RocketController newRocketController;
 
     private void Start()
     {
         ChangeAlertVisibility(false);
     }
-    RocketController newRocketController;
     public void ChangeAlertVisibility(bool canActive)
     {
         AlertController.gameObject.SetActive(canActive);
     }
-    // private void Start()
-    // {
-    //     _alertController.AlertVerticalMove.OnStopEvent += HandleOnSpawn;
-    // }
-
     private void HandleOnSpawn()
     {
         Spawn();
@@ -32,7 +27,6 @@ public class RocketSpawner : MonoBehaviour
     private void OnDisable()
     {
         _alertController.AlertVerticalMove.OnStopEvent -= HandleOnSpawn;
-
     }
 
     public void Spawn()

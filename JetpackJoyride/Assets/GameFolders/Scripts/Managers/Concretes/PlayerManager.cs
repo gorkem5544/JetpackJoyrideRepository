@@ -30,4 +30,3 @@ public class PlayerManager : SingletonDontDestroyMonoObject<PlayerManager>
         //GoldManager.Instance.GameInGoldAmount = 0;
     }
 }
-

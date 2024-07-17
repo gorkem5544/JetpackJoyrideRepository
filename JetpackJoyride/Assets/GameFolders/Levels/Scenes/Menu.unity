@@ -156,6 +156,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e2a4a977949ea840bd79e82a481e0df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &344391921 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3534561964510313395, guid: ce381f76df1f91a4aba2b4f6e8654db3, type: 3}
+  m_PrefabInstance: {fileID: 3534561965154756950}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9bc1dc46a1085b49a72ff1a4ec9b8da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &362365212 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5786199327940267791, guid: 4e7ec64d67ef4c548a8e623d0255acaf, type: 3}
@@ -263,6 +274,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DefaultPlayer
       objectReference: {fileID: 0}
+    - target: {fileID: 3017926136012858963, guid: 04d7d38c93df79c4e8b665db195215df, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -347,6 +362,8 @@ MonoBehaviour:
   - {fileID: 1439421200}
   - {fileID: 59527039}
   _menuSceneGoldText: {fileID: 1826560567}
+  _menuSceneGameStartButton: {fileID: 2035099991}
+  _levelManager: {fileID: 344391921}
 --- !u!114 &1119276663 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 480809131, guid: 4e7ec64d67ef4c548a8e623d0255acaf, type: 3}
@@ -654,6 +671,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9e2a4a977949ea840bd79e82a481e0df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2035099991 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 851513585, guid: 4e7ec64d67ef4c548a8e623d0255acaf, type: 3}
+  m_PrefabInstance: {fileID: 1476801482}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42b93aa969f12cf449438b864619ef29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &2488393391429534726
