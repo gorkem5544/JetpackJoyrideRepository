@@ -7,24 +7,30 @@ using UnityEngine;
 
 namespace Assembly_CSharp.Assets.GameFolders.Scripts.Controllers.Concretes.OtherControllers
 {
-    public class GoldController : LifeCycleController, IGoldController, IGoldHorizontalMoveWithRigidBody2D
+    public class GoldController : LifeCycleController, IGoldController
     {
-        IGoldHorizontalMove _goldHorizontalMove;
 
         Rigidbody2D _rigidbody2D;
         public Rigidbody2D Rigidbody2D => _rigidbody2D;
 
         [SerializeField] GoldDetailScriptableObject _goldDetailScriptableObject;
-        public float HorizontalMoveSpeed => _goldDetailScriptableObject.HorizontalMoveSpeed;
-
+        public GoldDetailScriptableObject GoldDetailScriptableObject => _goldDetailScriptableObject;
+        IGoldHorizontalMove _goldHorizontalMove;
+        GoldHorizontalMoveService _goldHorizontalMoveService;
         private void Awake()
         {
             _rigidbody2D = GetComponent<Rigidbody2D>();
-            _goldHorizontalMove = new GoldHorizontalMoveWithRigidBody2D(this);
+            _goldHorizontalMoveService = new GoldHorizontalMoveService(this);
+            _goldHorizontalMove = new GoldHorizontalMoveWithRigidBody2D(_goldHorizontalMoveService);
         }
         private void OnEnable()
         {
-            _goldHorizontalMove.HorizontalMoveTick();
+            //_goldHorizontalMove.FixedTick();
+
+        }
+        private void FixedUpdate()
+        {
+            _goldHorizontalMove.FixedTick();
         }
         public override void KillObject()
         {
@@ -34,7 +40,7 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.Controllers.Concretes.Other
         {
             if (other.TryGetComponent(out IPlayerController playerController))
             {
-                playerController.GoldManger.IncreaseGameInGoldAmount(1);
+                playerController.GoldManger.GameInIncreaseGoldAmount(1);
                 KillObject();
             }
         }

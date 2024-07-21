@@ -10,20 +10,25 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.UserInterfaces.Concretes.Ga
     {
         [SerializeField] TextMeshProUGUI _coinText;
         private IGoldManager _playerGoldManager;
+
         public void Initialize(IPlayerController playerController)
         {
             _playerGoldManager = playerController.GoldManger;
         }
+
         private void Start()
         {
-            _playerGoldManager.GoldChangedEvent += HandleOnCoinChanged;
+            _playerGoldManager.GameInGoldChangedEvent += HandleOnCoinChanged;
+            HandleOnCoinChanged(000);
         }
 
-        private void HandleOnCoinChanged(int obj) => _coinText.text = "GOLD: " + obj.ToString();
+        private void HandleOnCoinChanged(int obj)
+        {
+            Debug.Log("Current Gold: " + obj);
+            _coinText.text = "GOLD: " + obj.ToString();
+        }
 
-
-        private void OnDisable() => _playerGoldManager.GoldChangedEvent -= HandleOnCoinChanged;
-
+        private void OnDisable() => _playerGoldManager.GameInGoldChangedEvent -= HandleOnCoinChanged;
 
     }
 

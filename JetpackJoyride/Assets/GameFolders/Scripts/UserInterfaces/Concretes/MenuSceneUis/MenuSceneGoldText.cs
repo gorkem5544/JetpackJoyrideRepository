@@ -10,21 +10,28 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.UserInterfaces.Concretes.Me
     public class MenuSceneGoldText : MonoBehaviour
     {
         [SerializeField] TextMeshProUGUI _goldInformationText;
-        IGoldManager _goldManager;
-        public void Installer(IGoldManager goldManager)
+        private IGoldManager _goldManager;
+
+        public void Initialize(IGoldManager goldManager)
         {
             _goldManager = goldManager;
-            _goldManager.GoldChangedEvent += GoldManager_GoldChangedEvent;
-            UpdateMenuGoldText(0);
+            UpdateMenuGoldText(_goldManager.GoldData.TotalGoldAmount);
+            _goldManager.MenuInGoldChangedEvent += GoldManager_GoldChangedEvent;
+        }
+        private void Start()
+        {
+            _goldManager.MenuInGoldChangedEvent += GoldManager_GoldChangedEvent;
         }
         private void OnDisable()
         {
-            _goldManager.GoldChangedEvent -= GoldManager_GoldChangedEvent;
+            _goldManager.MenuInGoldChangedEvent -= GoldManager_GoldChangedEvent;
         }
+
         private void GoldManager_GoldChangedEvent(int goldAmount)
         {
             UpdateMenuGoldText(goldAmount);
         }
+
         private void UpdateMenuGoldText(int goldAmount = 0)
         {
             _goldInformationText.text = $"GOLD: {goldAmount}";

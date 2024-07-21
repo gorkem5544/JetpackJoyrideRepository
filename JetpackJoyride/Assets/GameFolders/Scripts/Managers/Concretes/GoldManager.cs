@@ -5,80 +5,87 @@ using Unity.VisualScripting;
 using UnityEngine;
 public interface IGoldManager
 {
-    int PlayerReSpawnCost();
-    void PlayerPrefsGetScore();
-    System.Action<int> GoldChangedEvent { get; set; }
+
+    void GameInIncreaseGoldAmount(int amount);
+    System.Action<int> MenuInGoldChangedEvent { get; set; }
+    System.Action<int> GameInGoldChangedEvent { get; set; }
+    GoldData GoldData { get; }
+
     int CurrentGold { get; }
     int GameInGoldAmount { get; }
-    void IncreaseGameInGoldAmount(int amount);
-    void DecreaseGameInGoldAmount(int amount);
-    int SumGameAndMenuScore();
+    //void IncreaseTotalGoldAmount(int amount);
+    //void DecreaseGameInGoldAmount(int amount);
+
+    void ResetGameInGoldAmount();
 }
 
 public class GoldManager : IGoldManager
 {
 
     const string PLAYER_DATA_JSON_KEY = "PlayerDataJson";
-    public Action<int> GoldChangedEvent { get; set; }
+    public Action<int> MenuInGoldChangedEvent { get; set; }
+    public Action<int> GameInGoldChangedEvent { get; set; }
 
-    private GoldDataSO _goldDataSO;
-    private int _gameInGoldAmount;
+    private GoldData _goldData;
+    private int _gameInCurrentGoldAmount;
 
     public GoldManager()
     {
         LoadGoldData();
     }
 
-    public int CurrentGold => _goldDataSO?.GoldAmount ?? 0;
-    public GoldDataSO GoldDataSO => _goldDataSO;
+    public int CurrentGold => _goldData?.TotalGoldAmount ?? 0;
 
-    public int GameInGoldAmount
-    {
-        get => _gameInGoldAmount;
-        set
-        {
-            _gameInGoldAmount = value;
-            SaveGoldData();
-            GoldChangedEvent?.Invoke(_gameInGoldAmount);
-        }
-    }
+    public GoldData GoldData => _goldData;
+
+    public int GameInGoldAmount => _gameInCurrentGoldAmount;
+
+
 
     public void LoadGoldData()
     {
-        _goldDataSO = JsonHelper.Load<GoldDataSO>(PLAYER_DATA_JSON_KEY) ?? new GoldDataSO { GoldAmount = 0 };
+        _goldData = JsonHelper.Load<GoldData>(PLAYER_DATA_JSON_KEY) ?? new GoldData() { GameInCurrentGoldAmount = 0, TotalGoldAmount = 0 };
+    }
+    private void SaveGoldData()
+    {
+        JsonHelper.Save(PLAYER_DATA_JSON_KEY, _goldData);
+    }
+    public void ResetGameInGoldAmount()
+    {
+        _goldData.GameInCurrentGoldAmount = 0;
+        MenuInGoldChangedEvent?.Invoke(_goldData.GameInCurrentGoldAmount);
     }
 
-    public void IncreaseGameInGoldAmount(int amount)
+
+
+    public void GameInIncreaseGoldAmount(int increaseAmount)
     {
-        _gameInGoldAmount += amount;
-        _goldDataSO.GoldAmount += amount;
+        _goldData.GameInCurrentGoldAmount += increaseAmount;
+        MenuInIncreaseGoldAmount(increaseAmount);
         SaveGoldData();
-        GoldChangedEvent?.Invoke(_goldDataSO.GoldAmount);
+        GameInGoldChangedEvent?.Invoke(_goldData.GameInCurrentGoldAmount);
     }
-
-    public void DecreaseGameInGoldAmount(int amount)
+    public void GameInDecreaseGoldAmount(int decreaseAmount)
     {
-        _gameInGoldAmount -= amount;
-        _goldDataSO.GoldAmount -= amount;
+        _goldData.GameInCurrentGoldAmount -= decreaseAmount;
         SaveGoldData();
-        GoldChangedEvent?.Invoke(_goldDataSO.GoldAmount);
+        GameInGoldChangedEvent?.Invoke(_goldData.GameInCurrentGoldAmount);
     }
 
-    public void SaveGoldData()
+
+    public void MenuInIncreaseGoldAmount(int increaseAmount)
     {
-        JsonHelper.Save(PLAYER_DATA_JSON_KEY, _goldDataSO);
+        _goldData.TotalGoldAmount += increaseAmount;
+        MenuInGoldChangedEvent?.Invoke(_goldData.TotalGoldAmount);
     }
-    public int PlayerReSpawnCost()
+    public void MenuInDecreaseGoldAmount(int decreaseAmount)
     {
-        throw new NotImplementedException();
+        _goldData.TotalGoldAmount -= decreaseAmount;
+        SaveGoldData();
+        MenuInGoldChangedEvent?.Invoke(_goldData.TotalGoldAmount);
     }
 
-    public void PlayerPrefsGetScore()
-    {
-        throw new NotImplementedException();
-    }
-
-    public int SumGameAndMenuScore()
+    public void GameInIncreaseGoldAmount()
     {
         throw new NotImplementedException();
     }

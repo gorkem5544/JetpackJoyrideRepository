@@ -21,7 +21,7 @@ public class MenuUnitializer : MonoBehaviour
     private void Awake()
     {
         _goldManager = new GoldManager();
-        _menuSceneGoldText.Installer(_goldManager);
+        _menuSceneGoldText.Initialize(_goldManager);
         _menuSceneGameStartButton.Installer(_levelManager);
 
 

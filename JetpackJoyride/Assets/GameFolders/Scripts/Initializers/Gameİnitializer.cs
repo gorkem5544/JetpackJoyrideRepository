@@ -30,14 +30,18 @@ public class Gameİnitializer : MonoBehaviour
     [SerializeField] private ReturnMenuButtonInGame _returnMenuButton;
     [SerializeField] private LevelManager _levelManager;
 
+    [SerializeField] private AlertController _alertController;
+
     private void Awake()
     {
         LoadPlayerDetails();
+        _currentInstantiatePlayer.GoldManger.ResetGameInGoldAmount();
         _barrierGenericPool.Installer(_currentInstantiatePlayer);
         _gameOverObject.Initialize(_currentInstantiatePlayer);
         _gameOverPanel.Initialize(_currentInstantiatePlayer);
         _gameSceneGoldInfoText.Initialize(_currentInstantiatePlayer);
         _returnMenuButton.Installer(_levelManager);
+        _alertController.Installer(_currentInstantiatePlayer);
 
         _goldPool.Installer(_currentInstantiatePlayer);
         _laserPool.Installer(_currentInstantiatePlayer);
@@ -80,6 +84,10 @@ public class Gameİnitializer : MonoBehaviour
         _currentInstantiatePlayer = Instantiate(_playerInstantiatePrefab, new Vector3(-10, 0), Quaternion.identity);
         _currentInstantiatePlayer.GetComponentInChildren<SpriteRenderer>().color = _selectionPlayerDetailSO.Color;
         //_currentInstantiatePlayer.GoldManger.GameInGoldAmount = 0;
+    }
+    private void OnDestroy()
+    {
+        _currentInstantiatePlayer.GoldManger.MenuInGoldChangedEvent = null;
     }
 }
 

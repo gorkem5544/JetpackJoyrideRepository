@@ -8,7 +8,6 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.UserInterfaces.Concretes.Me
 {
     public class PlayerPurchaseButton : BaseButton
     {
-        const string PLAYER_DATA_JSON_KEY = "PlayerDataJson";
         [SerializeField] public PlayerDetailSO _playerDetailSO;
         private GoldManager _goldManager;
 
@@ -19,12 +18,9 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.UserInterfaces.Concretes.Me
         protected override void ButtonOnClick()
         {
             _goldManager.LoadGoldData();
-            GoldDataSO _goldDataSO = JsonHelper.Load<GoldDataSO>(PLAYER_DATA_JSON_KEY) ?? new GoldDataSO { GoldAmount = 0 };
-            Debug.Log("aa");
-            if (_goldManager.CurrentGold > 1000)
+            if (_goldManager.GoldData.TotalGoldAmount > 1000)
             {
-                Debug.Log("bb"); _goldManager.DecreaseGameInGoldAmount(1000);
-                Debug.Log(_goldManager.CurrentGold);
+                _goldManager.MenuInDecreaseGoldAmount(1000);
                 ShopManager.Instance.PlayerDetailSave(_playerDetailSO);
                 gameObject.SetActive(false);
             }

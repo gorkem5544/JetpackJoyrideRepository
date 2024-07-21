@@ -22,19 +22,19 @@ public class SpawnerControllerDelayState : AbstractSpawnerControllerTimeDependen
         switch (_randomIndex)
         {
             case 0:
-                return SpawningObjectTypeEnum.LaserEnemySpawn;
+                return SpawningObjectTypeEnum.Rocket;
             case 1:
-                return SpawningObjectTypeEnum.LaserEnemySpawn;
+                return SpawningObjectTypeEnum.Rocket;
             case 2:
-                return SpawningObjectTypeEnum.LaserEnemySpawn;
+                return SpawningObjectTypeEnum.Rocket;
             case 3:
-                return SpawningObjectTypeEnum.LaserEnemySpawn;
+                return SpawningObjectTypeEnum.Rocket;
             case 4:
-                return SpawningObjectTypeEnum.LaserEnemySpawn;
+                return SpawningObjectTypeEnum.Rocket;
             case 5:
-                return SpawningObjectTypeEnum.LaserEnemySpawn;
+                return SpawningObjectTypeEnum.Rocket;
             case 6:
-                return SpawningObjectTypeEnum.LaserEnemySpawn;
+                return SpawningObjectTypeEnum.Rocket;
             default:
                 return SpawningObjectTypeEnum.Delay;
         }

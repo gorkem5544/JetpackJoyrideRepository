@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
         _playerAddForceMovement.ForceUpMovementUpdateTick();
         if (Input.GetKeyDown(KeyCode.A))
         {
-            _goldManger.IncreaseGameInGoldAmount(1000);
+            _goldManger.GameInIncreaseGoldAmount(1000);
         }
     }
     private void FixedUpdate()
@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
     }
     private void OnDisable()
     {
-        _goldManger.PlayerPrefsGetScore();
+        _goldManger.GameInIncreaseGoldAmount();
     }
 }
 

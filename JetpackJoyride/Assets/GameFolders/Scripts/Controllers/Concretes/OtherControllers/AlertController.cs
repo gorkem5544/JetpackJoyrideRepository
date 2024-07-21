@@ -23,5 +23,11 @@ public class AlertController : MonoBehaviour, IAlertController
     {
         _playerController = playerController;
     }
+    private void FixedUpdate()
+    {
+        _alertVerticalMove.PlayMove();
+    }
+
+
 
 }

@@ -15,7 +15,7 @@ namespace Assembly_CSharp.Assets.GameFolders.Scripts.UserInterfaces.Concretes.Ga
         }
         private void OnEnable()
         {
-            _playerReSpawnButton.gameObject.SetActive(_playerController.GoldManger.GameInGoldAmount >= _playerController.PlayerHealth.HitCount * 5);
+            // _playerReSpawnButton.gameObject.SetActive(_playerController.GoldManger.GameInGoldAmount >= _playerController.PlayerHealth.HitCount * 5);
         }
     }
 }
